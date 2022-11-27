@@ -14,14 +14,14 @@
 
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!
-    # nix-colors.url = "github:misterio77/nix-colors";
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        specialArgs = { inherit inputs nix-colors; }; # Pass flake inputs to our config
         # > Our main nixos configuration file <
         modules = [ ./nixos/pathfinder/configuration.nix ];
       };
@@ -29,7 +29,7 @@
 
     homeConfigurations = {
       # FIXME replace with your username@hostname
-      "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
+      "zackerthescar@pathfinder" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
         # > Our main home-manager configuration file <
