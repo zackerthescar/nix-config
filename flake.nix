@@ -21,19 +21,16 @@
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs nix-colors; }; # Pass flake inputs to our config
-        # > Our main nixos configuration file <
-        modules = [ ./nixos/pathfinder/configuration.nix ];
-      };
-    };
-
-    homeConfigurations = {
-      # FIXME replace with your username@hostname
-      "zackerthescar@pathfinder" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        # > Our main home-manager configuration file <
-        modules = [ ./home-manager/pathfinder/home.nix ];
+        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        modules = [ 
+          ./nixos/pathfinder/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.zackerthescar = import ./home-manager/pathfinder/home.nix;
+            home-manager.extraSpecialArgs = { inhert inputs; };
+          }
+        ];
       };
     };
   };
