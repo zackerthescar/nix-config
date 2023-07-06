@@ -120,70 +120,7 @@ in
   # vscode config
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      arcticicestudio.nord-visual-studio-code
-      ms-vscode-remote.remote-ssh
-      yzhang.markdown-all-in-one
-      ms-python.python
-      ms-python.vscode-pylance
-      redhat.java
-      ms-vscode.cpptools
-    ];
   };
-
-  # mako config
-  programs.mako = {
-    enable = true;
-    defaultTimeout = 2500;
-  };
-
-  # waybar config
-  programs.waybar = {
-    enable = true;
-    package = (pkgs.waybar.override (oldAttrs: { pulseSupport = true;} ));
-    settings = [{
-      layer = "top";
-      position = "top";
-      height = 12;
-      modules-left = [ "sway/workspaces" "sway/mode" ];
-      modules-center = [ "sway/window" ];
-      modules-right = [ "network" "pulseaudio" "battery" "clock" "tray" ];
-    }];
-  };
-
-  # sway config
-  wayland.windowManager.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    config = {
-      terminal = "alacritty";
-      menu = "wofi --show drun -I";
-      bars = [{
-        fonts.size = 12.0;
-        position = "top";
-        command = "waybar";
-      }]; 
-      modifier = "Mod4";
-      input = lib.mkOptionDefault {
-        "type:touchpad" = {
-          tap = "enabled";
-        };
-      };
-      keybindings = lib.mkOptionDefault {
-        "XF86MonBrightnessDown" = "exec light -U 10";
-        "XF86MonBrightnessUp" = "exec light -A 10";
-        "XF86AudioMute" = "exec 'pamixer -t'";
-        "XF86AudioRaiseVolume" = "exec 'pamixer -i 5'";
-        "XF86AudioLowerVolume" = "exec 'pamixer -d 5'";
-        "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-      };
-      startup = [
-        { command = "dbus-sway-environment";}
-        { command = "configure-gtk";}
-      ];
-    };
-  };
-
 
   home.packages = with pkgs; [
     # commands
@@ -191,49 +128,43 @@ in
     lolcat
     neofetch
     htop
-    # Sway stuff
-    swaylock
-    swayidle
-    wl-clipboard
-    mako
-    alacritty
-    wofi
-    waybar
-    grim
-    slurp
-    pamixer
-    # Theme
-    nordic
     papirus-icon-theme
-    firefox-wayland
+    firefox
     discord
-    vlc
-    spotify
+    mpv
   ];
-
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = 1;
-    XDG_CURRENT_DESKTOP = "sway";
-    NIXOS_OZONE_WL = 1;
-    SDL_VIDEODRIVER = "wayland";
-    CLUTTER_BACKEND = "wayland";
-    GDK_BACKEND = "wayland";
-    QT_QPA_PLATFORM = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
-  };
 
   gtk = {
     enable = true;
-    font.name = "Noto Sans";
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
     theme = {
       name = "Nordic-darker";
       package = pkgs.nordic;
     };
-    iconTheme = {
-      name = "Papirus-dark";
-      package = pkgs.papirus-icon-theme;
+  };
+  home.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+        GTK_THEME = "Nordic-darker";
+  }; 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      theme = "Nordic-darker";
+      button-layout = "appmenu:minimize,maximize,close";
+    };
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
+    };
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Nordic-darker";
     };
   };
-}
 
+}
 

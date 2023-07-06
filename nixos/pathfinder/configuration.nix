@@ -62,30 +62,8 @@
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
 
-  xdg = {
-      portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
-          xdg-desktop-portal-gtk
-        ];
-        gtkUsePortal = true;
-      };
-  };
-
-  security.polkit.enable = true;
-
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-  # Podman stuff
-  virtualisation = {
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      defaultNetwork.dnsname.enable = true;
-    };
-  };
 
   # Fonts config
 
@@ -129,14 +107,13 @@
       pulse.enable = true;
   };
 
+  # Tailscale
+  services.tailscale.enable = true;
+
   # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
-  # Brightness control
-  programs.light.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.jane = {
@@ -147,7 +124,7 @@
   #     thunderbird
   #   ];
   # };
-
+  programs.zsh.enable = true;
   users.users.zackerthescar = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "video" ];
@@ -171,6 +148,8 @@
     wget
     curl
     nano
+    gnome.gnome-tweaks
+    gnomeExtensions.user-themes
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -188,8 +167,27 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.tlp.enable = true;
-  services.upower.enable = true;
+
+  # GNOME
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  environment.gnome.excludePackages = (with pkgs; [ 
+	gnome-photos gnome-tour
+    ]) ++ (with pkgs.gnome; [
+	gnome-music
+	gedit
+	epiphany
+	geary
+	evince
+	gnome-characters
+	totem
+	tali
+	iagno
+	hitori
+	atomix
+    ]);
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -209,11 +207,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
-  security.pam.services.swaylock = {
-      text = "auth include login";
-  };
-
 
 }
 
