@@ -141,20 +141,24 @@ in
       package = pkgs.papirus-icon-theme;
     };
     theme = {
-      name = "Nordic-darker";
-      package = pkgs.nordic;
+      name = "Catppuccin-Macchiato-Compact-Teal-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "teal" ];
+        size = "compact";
+        variant = "macchiato";
+      };
     };
   };
   home.sessionVariables = {
         NIXOS_OZONE_WL = "1";
-        GTK_THEME = "Nordic-darker";
+        GTK_THEME = "Catppuccin-Macchiato-Compact-Teal-Dark";
   }; 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
     "org/gnome/desktop/wm/preferences" = {
-      theme = "Nordic-darker";
+      theme = "Catppuccin-Macchiato-Compact-Teal-Dark";
       button-layout = "appmenu:minimize,maximize,close";
     };
     "org/gnome/shell" = {
@@ -162,7 +166,7 @@ in
       enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
     };
     "org/gnome/shell/extensions/user-theme" = {
-      name = "Nordic-darker";
+      name = "Catppuccin-Macchiato-Compact-Teal-Dark";
     };
   };
 
