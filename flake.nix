@@ -17,13 +17,14 @@
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, ... }@inputs: {
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [ 
+        modules = [
           ./nixos/pathfinder/configuration.nix
+          # nixos-hardware.nixosModules.lenovo-thinkpad-t520
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

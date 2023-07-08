@@ -122,6 +122,7 @@ in
     enable = true;
   };
 
+
   home.packages = with pkgs; [
     # commands
     fortune
@@ -132,6 +133,7 @@ in
     firefox
     discord
     mpv
+    spotify
   ];
 
   gtk = {
@@ -169,6 +171,7 @@ in
       name = "Catppuccin-Macchiato-Compact-Teal-Dark";
     };
   };
+
 
 }
 
