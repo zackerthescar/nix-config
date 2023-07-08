@@ -46,6 +46,11 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  imports = [
+    ../programs/git.nix
+    ../programs/zsh.nix
+  ];
+
   nixpkgs.overlays = [
     (self:
       super: {
@@ -57,18 +62,6 @@ in
     )
   ];
 
-  # Git config
-  programs.git = {
-    enable = true;
-    package = pkgs.gitAndTools.gitFull;
-    userName = "Shaun Loo";
-    userEmail = "shaunloo10@gmail.com";
-    extraConfig = {
-      core.editor = "vim";
-      credential.helper = "cache";
-      init.defaultBranch = "main";
-    };
-  };
 
   # tmux config
   programs.tmux = {
@@ -77,45 +70,6 @@ in
     terminal = "screen-256color";
   };
 
-  # zsh config
-  programs.zsh = {
-    enable = true;
-    history = {
-      size = 8192;
-      path = "${config.xdg.dataHome}/zsh/history";
-    };
-    zplug =  {
-      enable = true;
-      plugins = [
-        { name = "plugins/colored-man-pages"; tags = [from:oh-my-zsh]; }
-        { name = "plugins/colorize";          tags = [from:oh-my-zsh]; }
-        { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
-        { name = "plugins/fd";                tags = [from:oh-my-zsh]; }
-        { name = "plugins/fzf";               tags = [from:oh-my-zsh]; }
-        { name = "plugins/git";               tags = [from:oh-my-zsh]; }
-        { name = "plugins/ripgrep";           tags = [from:oh-my-zsh]; }
-        { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
-        { name = "zsh-users/zsh-autosuggestions";}
-        { name = "zsh-users/zsh-syntax-highlighting";}
-        { name = "zsh-users/zsh-history-substring-search";}
-        { name = "themes/theunraveler";      tags = [from:oh-my-zsh]; }
-      # { name = "plugins/vi-mode";           tags = [from:oh-my-zsh]; }
-      # { name = "plugins/cargo";             tags = [from:oh-my-zsh]; }
-      # { name = "plugins/direnv";            tags = [from:oh-my-zsh]; }
-      # { name = "plugins/pass";              tags = [from:oh-my-zsh]; }
-      # { name = "plugins/rsync";             tags = [from:oh-my-zsh]; }
-      # { name = "plugins/"; tags = [from:oh-my-zsh]; }
-      { name = "kutsan/zsh-system-clipboard"; }  # IMPORTANT
-      # { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
-      ];
-    };
-  };
-
-  #fzf
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
 
   # vscode config
   programs.vscode = {
@@ -135,43 +89,6 @@ in
     mpv
     spotify
   ];
-
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    theme = {
-      name = "Catppuccin-Macchiato-Compact-Teal-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "teal" ];
-        size = "compact";
-        variant = "macchiato";
-      };
-    };
-  };
-  home.sessionVariables = {
-        NIXOS_OZONE_WL = "1";
-        GTK_THEME = "Catppuccin-Macchiato-Compact-Teal-Dark";
-  }; 
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      theme = "Catppuccin-Macchiato-Compact-Teal-Dark";
-      button-layout = "appmenu:minimize,maximize,close";
-    };
-    "org/gnome/shell" = {
-      disable-user-extensions = false;
-      enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
-    };
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Catppuccin-Macchiato-Compact-Teal-Dark";
-    };
-  };
-
 
 }
 
