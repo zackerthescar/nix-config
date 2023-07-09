@@ -1,6 +1,5 @@
-{ config, lib, pkgs, ...}:
+{ pkgs, ...}:
 
-with lib;
 with pkgs;
 
 {

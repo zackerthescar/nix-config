@@ -23,6 +23,10 @@ with pkgs;
             NIXOS_OZONE_WL = "1";
             GTK_THEME = "Catppuccin-Macchiato-Compact-Teal-Dark";
     }; 
+    home.packages = with pkgs; [
+        gnome.gnome-tweaks
+        gnomeExtensions.user-themes
+    ];
     dconf.settings = {
         "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
