@@ -1,4 +1,8 @@
-{ config, pkgs, ...}:
+{ inputs, config, pkgs, ...}:
+
+let
+   inherit (inputs) ssh-keys;
+in
 
 {
   programs.zsh.enable = true;
@@ -7,5 +11,6 @@
       extraGroups = [ "wheel" "networkmanager" "video" ];
       home = "/home/zackerthescar";
       shell = pkgs.zsh;
+      openssh.authorizedKeys.keyFiles = [ ssh-keys.outPath ];
    };
 }
