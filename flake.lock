@@ -1,12 +1,32 @@
 {
   "nodes": {
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688898859,
+        "narHash": "sha256-NjvwXnMp8oMQ86FHVhzlmgGy2dVDMGVLpZ4+YVsJgMU=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "66a3047fa88eb6aa5c5a2e675de91f0431fbe561",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
-        "lastModified": 1688798314,
-        "narHash": "sha256-MFG5rx7L756rtrPHsL662m64AZ4sKqUcApaiYgSKfNM=",
+        "lastModified": 1688966833,
+        "narHash": "sha256-9ilzbSwArZmDjT/g1XYD+KYOFfmoS0WOYXSQBvZDIv4=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c",
+        "rev": "f0984a5a303659bc9b73895c82a85fdfae40b87a",
         "type": "github"
       },
       "original": {
@@ -38,11 +58,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1688798314,
-        "narHash": "sha256-MFG5rx7L756rtrPHsL662m64AZ4sKqUcApaiYgSKfNM=",
+        "lastModified": 1688966833,
+        "narHash": "sha256-9ilzbSwArZmDjT/g1XYD+KYOFfmoS0WOYXSQBvZDIv4=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c",
+        "rev": "f0984a5a303659bc9b73895c82a85fdfae40b87a",
         "type": "github"
       },
       "original": {
@@ -68,6 +88,7 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
