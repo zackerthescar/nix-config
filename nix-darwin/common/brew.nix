@@ -5,6 +5,8 @@
 		casks = [
 			"discord"
 			"visual-studio-code"
+			"firefox"
+			"spotify"
 		];
 	};
 }

@@ -9,7 +9,7 @@
   # services.nix-daemon.package = pkgs.nixFlakes;
   programs.zsh.enable = true;
   imports = [
-    ./brew.nix
+    ../common/brew.nix
   ];
 
 }
