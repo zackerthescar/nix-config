@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1688898859,
-        "narHash": "sha256-NjvwXnMp8oMQ86FHVhzlmgGy2dVDMGVLpZ4+YVsJgMU=",
+        "lastModified": 1688973178,
+        "narHash": "sha256-nsIzOjD3v5zuozWeUvifEQ778C8cLMqW5ga5cfrmxAA=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "66a3047fa88eb6aa5c5a2e675de91f0431fbe561",
+        "rev": "90ae979e352d241a86b73f8c7193bf7f749f37e4",
         "type": "github"
       },
       "original": {
@@ -99,7 +99,7 @@
     "ssh-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Q3YmCf1PqCEQZLEybyDXbSEgz4rsPtP6b6nAglXG/9U=",
+        "narHash": "sha256-96NnMgWSy4fum60bIMN4PcE0Zxi6yhCX7xcP8VGekCk=",
         "type": "file",
         "url": "https://github.com/zackerthescar.keys"
       },

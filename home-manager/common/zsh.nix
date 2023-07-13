@@ -7,6 +7,7 @@ with pkgs;
     # zsh config
     programs.zsh = {
         enable = true;
+        initExtra = "any-nix-shell zsh --info-right | source /dev/stdin";
         history = {
             size = 8192;
             path = "${config.xdg.dataHome}/zsh/history";
@@ -43,4 +44,8 @@ with pkgs;
         enable = true;
         enableZshIntegration = true;
     };
+
+    home.packages = with pkgs; [
+	any-nix-shell
+    ];
 }
