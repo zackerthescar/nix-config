@@ -13,6 +13,7 @@ with pkgs;
         fortune
         lolcat
         neofetch
+        hyfetch
         htop
     ];
 }

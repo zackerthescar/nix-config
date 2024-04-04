@@ -1,7 +1,7 @@
 { config, pkgs, ...}:
 {
-    services.tailscale.enable = true;
-    networking.firewall.enable = true;
-    networking.firewall.checkReversePath = "loose";
+    services.tailscale.enable = false;
+    networking.firewall.enable = false;
     services.openssh.enable = true;
+    virtualisation.libvirtd.enable = true;
 }

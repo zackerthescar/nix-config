@@ -6,5 +6,6 @@
         ./gnome.nix
         ./steam.nix
         ./services.nix
+	./signal.nix
     ];
 }

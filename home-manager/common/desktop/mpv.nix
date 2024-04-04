@@ -13,6 +13,7 @@
     ];
     programs.mpv = {
         config = {
+	    vo = "gpu";
             hwdec = "auto";
             profile = "gpu-hq";
             scale = "ewa_lanczossharp";

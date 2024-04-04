@@ -19,6 +19,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [ "i915" ];
   boot.initrd.kernelModules = [ "i915" ];
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
