@@ -11,7 +11,7 @@ with pkgs;
         package = pkgs.papirus-icon-theme;
         };
         theme = {
-        name = "Catppuccin-Macchiato-Compact-Teal-Dark";
+        name = "catppuccin-macchiato-teal-compact";
         package = pkgs.catppuccin-gtk.override {
             accents = [ "teal" ];
             size = "compact";
@@ -21,12 +21,11 @@ with pkgs;
     };
     home.sessionVariables = {
             NIXOS_OZONE_WL = "1";
-            GTK_THEME = "Catppuccin-Macchiato-Compact-Teal-Dark";
+            GTK_THEME = "catppuccin-macchiato-teal-compact";
     }; 
     home.packages = with pkgs; [
         gnome.gnome-tweaks
         gnomeExtensions.user-themes
-	gnomeExtensions.dash-to-panel
 	gnomeExtensions.arcmenu	
     ];
     dconf.settings = {
@@ -34,7 +33,7 @@ with pkgs;
         	color-scheme = "prefer-dark";
         };
         "org/gnome/desktop/wm/preferences" = {
-        	theme = "Catppuccin-Macchiato-Compact-Teal-Dark";
+        	theme = "catppuccin-macchiato-teal-compact";
         	button-layout = "appmenu:minimize,maximize,close";
         };
         "org/gnome/shell" = {
@@ -46,15 +45,10 @@ with pkgs;
 		];
         };
         "org/gnome/shell/extensions/user-theme" = {
-        	name = "Catppuccin-Macchiato-Compact-Teal-Dark";
+        	name = "catppuccin-macchiato-teal-compact";
         };
 	"org/gnome/desktop/peripherals/touchpad" = {
 		tap-to-click = "true";
-	};
-	"org/gnome/shell/extensions/dash-to-panel" = {
-		panel-sizes = "{\"0\":32}";
-		appicon-margin = 0;
-		panel-element-positions =   "{\"0\":[{\"element\":\"showAppsButton\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"activitiesButton\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"leftBox\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"taskbar\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"centerBox\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"rightBox\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"systemMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"dateMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"desktopButton\",\"visible\":true,\"position\":\"stackedBR\"}]}";
 	};
     };
 }

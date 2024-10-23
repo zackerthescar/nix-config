@@ -43,9 +43,8 @@
   # };
 
   # Magic incantations for hardware video acceleration
-  hardware.opengl = {
+  hardware.graphics = {
       enable = true;
-      driSupport = true;
       extraPackages = with pkgs; [
         vaapiIntel
         vaapiVdpau
@@ -57,7 +56,7 @@
   # services.xserver.enable = true;
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
+  services.xserver.xkb.layout = "us";
   # services.xserver.xkbOptions = {
   #   "eurosign:e";
   #   "caps:escape" # map caps to escape.
