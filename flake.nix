@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
@@ -36,6 +36,20 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import ./home-manager/pathfinder/home.nix;
+	    home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+      # Thinkpad X230
+      agena = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        modules = [
+          ./nixos/agena/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.zackerthescar = import ./home-manager/agena/home.nix;
 	    home-manager.backupFileExtension = "backup";
           }
         ];
