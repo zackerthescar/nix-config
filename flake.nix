@@ -13,6 +13,9 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
 
@@ -50,6 +53,21 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import ./home-manager/agena/home.nix;
+	    home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+      # Custom Desktop
+      atlantis = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        modules = [
+          lanzaboote.nixosModules.lanzaboote
+          ./nixos/atlantis/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
 	    home-manager.backupFileExtension = "backup";
           }
         ];
