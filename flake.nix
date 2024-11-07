@@ -26,7 +26,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, ... }@inputs: {
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
