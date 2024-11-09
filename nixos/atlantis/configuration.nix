@@ -16,6 +16,7 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/etc/secureboot";

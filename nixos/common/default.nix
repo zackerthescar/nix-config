@@ -1,6 +1,7 @@
 { config, pkgs, ...}:
 
 {
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     imports = [
         ./user.nix
         ./nix-settings.nix
@@ -11,5 +12,7 @@
     wget
     curl
     nano
+    tpm2-tss
+    tpm2-tools
   ];
 }

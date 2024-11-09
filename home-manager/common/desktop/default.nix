@@ -14,7 +14,7 @@ with pkgs;
         papirus-icon-theme
         firefox
         yt-dlp
-        spotify
+        #spotify
         reaper
         vlc
         caffeine-ng

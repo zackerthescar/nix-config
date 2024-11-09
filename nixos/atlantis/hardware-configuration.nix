@@ -14,44 +14,44 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/dab3cc72-89cf-4734-a864-7bf2d0ec3b5e";
+    { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=root" ];
+      options = [ "subvol=root" "compress=zstd" ];
     };
 
-  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/1c7f93a1-0fd5-4a7e-bc54-ea2e619bc790";
+  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/ffa90a2c-2157-4062-92cc-098c6f32bf37";
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/dab3cc72-89cf-4734-a864-7bf2d0ec3b5e";
+    { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=home" ];
+      options = [ "subvol=home" "compress=zstd" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/dab3cc72-89cf-4734-a864-7bf2d0ec3b5e";
+    { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=nix" ];
+      options = [ "subvol=nix" "compress=zstd" "noatime" ];
     };
+
+  fileSystems."/mnt/hdd0" =
+    { device = "/dev/mapper/hdd0";
+      fsType = "btrfs";
+    };
+
+  boot.initrd.luks.devices."hdd0".device = "/dev/disk/by-uuid/84608766-9c74-4aa7-a499-3e75e8c1ae7f";
+
+  fileSystems."/mnt/hdd1" =
+    { device = "/dev/mapper/hdd1";
+      fsType = "btrfs";
+    };
+
+  boot.initrd.luks.devices."hdd1".device = "/dev/disk/by-uuid/74d218d6-e8d7-461a-84b3-cd828efa8e74";
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6ADD-4431";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
-
-  fileSystems."/mnt/hdd0" =
-    { device = "/dev/disk/by-uuid/790dc90b-0acb-4f9a-8810-56c26cb9aab0";
-      fsType = "btrfs";
-    };
-
-  boot.initrd.luks.devices."hdd0".device = "/dev/disk/by-uuid/74d218d6-e8d7-461a-84b3-cd828efa8e74";
-
-  fileSystems."/mnt/hdd1" =
-    { device = "/dev/disk/by-uuid/aff578f6-e614-4781-86f0-8d003e46dfae";
-      fsType = "btrfs";
-    };
-
-  boot.initrd.luks.devices."hdd1".device = "/dev/disk/by-uuid/84608766-9c74-4aa7-a499-3e75e8c1ae7f";
 
   swapDevices = [ ];
 

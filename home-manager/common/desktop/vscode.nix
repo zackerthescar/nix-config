@@ -18,13 +18,13 @@
 	ocamllabs.ocaml-platform
         # Rust
         rust-lang.rust-analyzer
-        serayuzgur.crates
-	bungcip.better-toml
         # Nix
         bbenoist.nix
         arrterian.nix-env-selector
 	# Remote
 	ms-vscode-remote.remote-ssh
+        # Theme
+        catppuccin.catppuccin-vsc
     ];
   };
 }
