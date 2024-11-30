@@ -21,6 +21,13 @@
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
+  boot.initrd.systemd = {
+    enable = true;
+    storePaths = [
+      "${config.boot.initrd.systemd.package}/lib/systemd/systemd-tpm2-setup"
+      "${config.boot.initrd.systemd.package}/lib/systemd/system-generators/systemd-tpm2-generator"
+    ];
+  };
 
   networking.hostName = "atlantis"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -58,7 +65,7 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
   
 

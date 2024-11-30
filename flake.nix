@@ -68,7 +68,7 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
-	    home-manager.backupFileExtension = "backup";
+	          home-manager.backupFileExtension = "backup";
           }
         ];
       };

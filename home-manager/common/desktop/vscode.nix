@@ -25,6 +25,10 @@
 	ms-vscode-remote.remote-ssh
         # Theme
         catppuccin.catppuccin-vsc
+        # LaTeX
+        james-yu.latex-workshop
+        # direnv
+        mkhl.direnv
     ];
   };
 }

@@ -8,6 +8,7 @@ with pkgs;
         ./zsh.nix
         ./tmux.nix
         ./zellij.nix
+        ./ffmpeg.nix
     ];
     home.packages = with pkgs; [
         fortune

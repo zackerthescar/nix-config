@@ -48,4 +48,11 @@ with pkgs;
     home.packages = with pkgs; [
 	any-nix-shell
     ];
+
+    programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+    };
+
 }
