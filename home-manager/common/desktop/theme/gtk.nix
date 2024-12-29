@@ -24,7 +24,7 @@ with pkgs;
             GTK_THEME = "catppuccin-macchiato-teal-compact";
     }; 
     home.packages = with pkgs; [
-        gnome.gnome-tweaks
+        pkgs.gnome-tweaks
         gnomeExtensions.user-themes
 	gnomeExtensions.arcmenu	
     ];

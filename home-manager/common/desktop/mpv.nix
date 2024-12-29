@@ -1,12 +1,5 @@
 { config, pkgs, ...}:
 {
-    nixpkgs.overlays = with pkgs; [
-        (self: super: {
-            mpv-unwrapped = super.mpv-unwrapped.override {
-                ffmpeg_5 = ffmpeg_5-full;
-            };
-        })
-    ];
 
     home.packages = with pkgs; [
         mpv-unwrapped

@@ -63,6 +63,7 @@
         modules = [
           lanzaboote.nixosModules.lanzaboote
           ./nixos/atlantis/configuration.nix
+          (import ./overlays/default.nix)
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

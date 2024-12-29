@@ -18,6 +18,6 @@ with pkgs;
         reaper
         vlc
         caffeine-ng
-	chromium
+	musescore
     ];
 }
