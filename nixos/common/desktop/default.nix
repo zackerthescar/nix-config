@@ -3,7 +3,8 @@
 {
     imports = [
         ./fonts.nix
-        ./gnome.nix
+        # ./gnome.nix
+        ./plasma.nix
         ./steam.nix
         ./services.nix
 	./signal.nix

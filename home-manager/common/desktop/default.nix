@@ -4,11 +4,12 @@ with pkgs;
 
 {
     imports = [
-        ./theme/gtk.nix
+        # ./theme/gtk.nix
+        ./theme/plasma.nix
         ./mpv.nix
         ./vscode.nix
         ./discord.nix
-	./virt-manager.nix
+	    ./virt-manager.nix
     ];
     home.packages = with pkgs; [
         papirus-icon-theme

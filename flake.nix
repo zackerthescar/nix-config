@@ -16,6 +16,12 @@
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
 
@@ -26,7 +32,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, ... }@inputs: {
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
@@ -39,7 +45,7 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import ./home-manager/pathfinder/home.nix;
-	    home-manager.backupFileExtension = "backup";
+	          home-manager.backupFileExtension = "backup";
           }
         ];
       };
@@ -53,7 +59,7 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import ./home-manager/agena/home.nix;
-	    home-manager.backupFileExtension = "backup";
+	          home-manager.backupFileExtension = "backup";
           }
         ];
       };
@@ -68,6 +74,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
             home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
 	          home-manager.backupFileExtension = "backup";
           }
