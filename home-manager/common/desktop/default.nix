@@ -19,6 +19,7 @@ with pkgs;
         reaper
         vlc
         caffeine-ng
-	    musescore
+	musescore
+        telegram-desktop
     ];
 }

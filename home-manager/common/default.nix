@@ -13,7 +13,7 @@ with pkgs;
     home.packages = with pkgs; [
         fortune
         lolcat
-        neofetch
+        fastfetch
         hyfetch
         htop
     ];

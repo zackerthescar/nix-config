@@ -16,10 +16,11 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.initrd.availableKernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.lanzaboote = {
     enable = true;
-    pkiBundle = "/etc/secureboot";
+    pkiBundle = "/var/lib/sbctl";
   };
   boot.initrd.systemd = {
     enable = true;
@@ -27,6 +28,12 @@
       "${config.boot.initrd.systemd.package}/lib/systemd/systemd-tpm2-setup"
       "${config.boot.initrd.systemd.package}/lib/systemd/system-generators/systemd-tpm2-generator"
     ];
+  };
+
+zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 25;
   };
 
   networking.hostName = "atlantis"; # Define your hostname.
