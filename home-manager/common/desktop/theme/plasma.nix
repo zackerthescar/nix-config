@@ -25,7 +25,7 @@ with pkgs;
     qt = {
         enable = true;
         style = {
-            name = "catppuccin-macchiato-teal-compact";
+            name = "Catppuccin-Macchiato-Teal";
             package = pkgs.catppuccin-kde.override {
                 accents = [ "teal" ];
                 flavour = [ "macchiato" ];
@@ -33,7 +33,7 @@ with pkgs;
             };
         };
         platformTheme = {
-            name = "catppuccin-macchiato-teal-compact";
+            name = "Catppuccin-Macchiato-Teal";
         };
     };
     home.sessionVariables = {
@@ -50,6 +50,7 @@ with pkgs;
             {
                 location = "bottom";
                 height = 32;
+                floating = true;
             }
         ];
     };

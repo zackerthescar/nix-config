@@ -2,7 +2,7 @@
 {
 
     home.packages = with pkgs; [
-        mpv-unwrapped
+        mpv
     ];
     programs.mpv = {
         config = {

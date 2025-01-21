@@ -2,7 +2,7 @@
 {
 
     home.packages = with pkgs; [
-	virt-manager
+		virt-manager
     ];
     dconf.settings = {
 	"org/virt-manager/virt-manager/connections" = {

@@ -76,7 +76,7 @@
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
             home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
-	          home-manager.backupFileExtension = "backup";
+	          home-manager.backupFileExtension = "backup-2";
           }
         ];
       };
