@@ -95,6 +95,20 @@
           }
         ];
       };
+      discovery = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./nix-darwin/discovery/default.nix
+          (import ./overlays/default-darwin.nix)
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.zackerthescar = import ./home-manager/discovery/home.nix;
+          }
+        ];
+      };
     };
   };
 }
