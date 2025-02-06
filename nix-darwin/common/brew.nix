@@ -4,6 +4,7 @@
 		onActivation.upgrade = true;
 		casks = [
 			"discord"
+			"firefox"
 		];
 	};
 }

@@ -16,5 +16,6 @@ with pkgs;
         fastfetch
         hyfetch
         htop
+	btop
     ];
 }

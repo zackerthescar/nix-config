@@ -16,5 +16,6 @@ with pkgs;
         # vlc
 	musescore
 	iterm2
+	utm
     ];
 }

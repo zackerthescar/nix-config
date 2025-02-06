@@ -6,7 +6,7 @@ with pkgs;
     programs.git = {
         enable = true;
         package = pkgs.gitAndTools.gitFull;
-        userName = "Shaun Loo";
+        userName = "Riley Loo";
         userEmail = "shaunloo10@gmail.com";
         extraConfig = {
         core.editor = "vim";
