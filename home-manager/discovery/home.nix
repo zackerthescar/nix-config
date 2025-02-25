@@ -19,7 +19,7 @@ with pkgs;
   programs.home-manager.enable = true;
 
   imports = [
-    ../common/default.nix
+    ../common/default-darwin.nix
     ../common/desktop/default-darwin.nix
   ];
 

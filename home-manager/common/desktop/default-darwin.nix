@@ -17,5 +17,6 @@ with pkgs;
 	musescore
 	iterm2
 	utm
+	#calibre
     ];
 }

@@ -17,7 +17,7 @@
 	# OCaml
 	ocamllabs.ocaml-platform
         # Rust
-        rust-lang.rust-analyzer
+        #rust-lang.rust-analyzer
         # Nix
         bbenoist.nix
         arrterian.nix-env-selector
