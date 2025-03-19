@@ -4,7 +4,6 @@
   # vscode config
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode.fhs;
     mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
 	# C/C++ Extension Pack

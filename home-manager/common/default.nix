@@ -16,7 +16,7 @@ with pkgs;
         fastfetch
         hyfetch
         htop
-	btop
-	wimlib
+        btop
+        wimlib
     ];
 }
