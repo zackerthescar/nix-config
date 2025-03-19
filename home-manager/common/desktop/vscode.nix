@@ -4,6 +4,8 @@
   # vscode config
   programs.vscode = {
     enable = true;
+    package = pkgs.vscode.fhs;
+    mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
 	# C/C++ Extension Pack
 	ms-vscode.cpptools
@@ -24,7 +26,9 @@
 	# Remote
 	ms-vscode-remote.remote-ssh
         # Theme
-        catppuccin.catppuccin-vsc
+        (pkgs.catppuccin-vsc.override {
+                accent = "teal";
+        })
         # LaTeX
         james-yu.latex-workshop
         # direnv

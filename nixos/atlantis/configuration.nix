@@ -68,6 +68,7 @@ zramSwap = {
 
   hardware.nvidia = {
     modesetting.enable = true;
+    nvidiaPersistenced = false;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
     open = false;

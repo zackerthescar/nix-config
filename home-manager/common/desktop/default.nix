@@ -15,11 +15,15 @@ with pkgs;
         papirus-icon-theme
         firefox
         yt-dlp
-        #spotify
+        spotify
         reaper
         vlc
         caffeine-ng
-	musescore
+	    musescore
         telegram-desktop
+        prismlauncher-riley
+        ckan
+        calibre
+        signal-desktop
     ];
 }

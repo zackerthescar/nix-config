@@ -22,6 +22,10 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    catppuccin-vsc = {
+      url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz";
+    };
+
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
 
