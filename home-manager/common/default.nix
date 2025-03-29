@@ -18,5 +18,6 @@ with pkgs;
         htop
         btop
         wimlib
+        texliveMedium
     ];
 }

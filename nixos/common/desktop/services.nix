@@ -8,4 +8,5 @@
       jack.enable = true;
     };
     services.printing.enable = true;
+    security.polkit.enable = true;
 }

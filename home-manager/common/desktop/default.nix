@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ...}:
+{ inputs, config, lib, pkgs, ...}:
 
 with pkgs;
 
 {
     imports = [
-        # ./theme/gtk.nix
-        ./theme/plasma.nix
+        ./theme/gtk.nix
+        # ./theme/plasma.nix
         ./mpv.nix
         ./vscode.nix
         ./discord.nix
@@ -13,6 +13,7 @@ with pkgs;
     ];
     home.packages = with pkgs; [
         papirus-icon-theme
+        inputs.zen-browser.packages."${system}".default
         firefox
         yt-dlp
         spotify
@@ -25,5 +26,6 @@ with pkgs;
         ckan
         calibre
         signal-desktop
+        alacritty
     ];
 }

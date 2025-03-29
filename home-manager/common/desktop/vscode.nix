@@ -19,6 +19,8 @@
 	ocamllabs.ocaml-platform
         # Rust
         rust-lang.rust-analyzer
+        # Svelte
+        svelte.svelte-vscode
         # Nix
         bbenoist.nix
         arrterian.nix-env-selector

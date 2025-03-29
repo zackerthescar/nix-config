@@ -19,18 +19,38 @@ with pkgs;
         };
         };
     };
+    qt = {
+        enable = true;
+        style = {
+            name = "Catppuccin-Macchiato-Teal";
+            package = pkgs.catppuccin-kde.override {
+                accents = [ "teal" ];
+                flavour = [ "macchiato" ];
+                winDecStyles = [ "modern" "classic" ];
+            };
+        };
+        platformTheme = {
+            name = "Catppuccin-Macchiato-Teal";
+        };
+    };
     home.sessionVariables = {
             NIXOS_OZONE_WL = "1";
             GTK_THEME = "catppuccin-macchiato-teal-compact";
     }; 
     home.packages = with pkgs; [
         pkgs.gnome-tweaks
+        catppuccin-cursors
         gnomeExtensions.user-themes
-	gnomeExtensions.arcmenu	
+	    gnomeExtensions.arcmenu
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.dash-to-dock
     ];
     dconf.settings = {
         "org/gnome/desktop/interface" = {
         	color-scheme = "prefer-dark";
+            font-name = "SF Pro Display 10";
+            monospace-font-name = "SF Mono 10";
+            font-antialiasing = "rgba";
         };
         "org/gnome/desktop/wm/preferences" = {
         	theme = "catppuccin-macchiato-teal-compact";
@@ -39,9 +59,10 @@ with pkgs;
         "org/gnome/shell" = {
         	disable-user-extensions = false;
         	enabled-extensions = [ 
-			"user-theme@gnome-shell-extensions.gcampax.github.com" 
-			"arcmenu@arcmenu.com"
-			"dash-to-panel@jderose9.github.com"
+                "user-theme@gnome-shell-extensions.gcampax.github.com" 
+                "arcmenu@arcmenu.com"
+                "blur-my-shell@aunetx"
+                "dash-to-dock@micxgx.gmail.com"
 		];
         };
         "org/gnome/shell/extensions/user-theme" = {

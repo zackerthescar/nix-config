@@ -16,6 +16,11 @@
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Apple fonts
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,7 +41,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, zen-browser, ... }@inputs: {
     nixosConfigurations = {
       # Thinkpad T520
       pathfinder = nixpkgs.lib.nixosSystem {
@@ -69,6 +74,7 @@
       };
       # Custom Desktop
       atlantis = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
         modules = [
           lanzaboote.nixosModules.lanzaboote
@@ -77,7 +83,7 @@
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs; system = "x86_64-linux"; };
             home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
             home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
 	          home-manager.backupFileExtension = "backup-2";
