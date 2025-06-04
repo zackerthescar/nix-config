@@ -4,8 +4,9 @@ with pkgs;
 
 {
     imports = [
-        ./theme/gtk.nix
-        # ./theme/plasma.nix
+        # ./theme/gtk.nix
+        ./theme/plasma.nix
+        ./theme/sway.nix
         ./mpv.nix
         ./vscode.nix
         ./discord.nix

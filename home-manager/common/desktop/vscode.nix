@@ -26,6 +26,7 @@
         arrterian.nix-env-selector
 	# Remote
 	ms-vscode-remote.remote-ssh
+        ms-vscode-remote.remote-containers
         # Theme
         (pkgs.catppuccin-vsc.override {
                 accent = "teal";

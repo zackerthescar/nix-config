@@ -19,5 +19,6 @@ with pkgs;
         btop
         wimlib
         texliveMedium
+        texlivePackages.enumitem
     ];
 }

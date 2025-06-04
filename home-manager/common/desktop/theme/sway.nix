@@ -11,5 +11,8 @@ with pkgs;
             modifier = "Mod4";
             terminal = "alacritty";
         };
-    }
+        extraOptions = [
+            "--unsupported-gpu"
+        ];
+    };
 }

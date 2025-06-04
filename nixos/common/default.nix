@@ -22,5 +22,7 @@
     tpm2-tss
     tpm2-tools
     (lib.hiPrio pkgs.uutils-coreutils-noprefix)
+    podman-compose
+    docker-compose
   ];
 }
