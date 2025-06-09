@@ -7,7 +7,7 @@ with pkgs;
     # zsh config
     programs.zsh = {
         enable = true;
-        initExtra = "any-nix-shell zsh --info-right | source /dev/stdin";
+        initContent = "any-nix-shell zsh --info-right | source /dev/stdin";
         history = {
             size = 8192;
             path = "${config.xdg.dataHome}/zsh/history";
@@ -17,7 +17,7 @@ with pkgs;
             plugins = [
             { name = "plugins/colored-man-pages"; tags = [from:oh-my-zsh]; }
             { name = "plugins/colorize";          tags = [from:oh-my-zsh]; }
-            { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
+            # { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
             { name = "plugins/fd";                tags = [from:oh-my-zsh]; }
             { name = "plugins/fzf";               tags = [from:oh-my-zsh]; }
             { name = "plugins/git";               tags = [from:oh-my-zsh]; }

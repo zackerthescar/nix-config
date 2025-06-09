@@ -5,7 +5,7 @@
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
 	# C/C++ Extension Pack
 	ms-vscode.cpptools
         twxs.cmake

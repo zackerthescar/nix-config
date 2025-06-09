@@ -51,15 +51,24 @@ outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-ma
         # Agena is bog standard
       };
       atlantis = {
+        backupExtension = "backup-2";
         extraModules = [
           lanzaboote.nixosModules.lanzaboote
+          (import ./overlays/default.nix)
         ];
+        homeExtraArgs = { system = "x86_64-linux"; };
       };
     };
 
     darwinMachines = {
+      columbia = {
+        system = "x86_64-darwin";
+      };
       discovery = {
         system = "aarch64-darwin";
+        extraModules = [
+          (import ./overlays/default-darwin.nix)
+        ];
       };
     };
 
@@ -73,26 +82,50 @@ outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-ma
           extraModules = [];
           homeExtraArgs = {};
         };
-        cfg = defaults // config;  # You need to merge config with defaults
+        cfg = defaults // config;
       in
       nixpkgs.lib.nixosSystem {
         system = cfg.system;
-        specialArgs = { inherit inputs; };  # Missing semicolon here
+        specialArgs = { inherit inputs; };
         modules = [
           configPath
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; } // cfg.homeExtraArgs;
+            home-manager.extraSpecialArgs = { inherit inputs;};
             home-manager.users.zackerthescar = import homePath;
-            home-manager.backupFileExtension = cfg.backupExtension;  # Use cfg instead of defaults
+            home-manager.backupFileExtension = cfg.backupExtension;
+            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
           }
           (import ./overlays/default.nix)
         ] ++ cfg.extraModules;
       };
 
+    mkDarwinSystem = name: config:
+      let
+        configPath = config.configPath or (./nix-darwin + "/${name}/default.nix");
+        homePath = config.homePath or (./home-manager + "/${name}/home.nix");
+        defaults = {
+          extraModules = [];
+        };
+        cfg = defaults // config;
+      in
+      darwin.lib.darwinSystem {
+        system = cfg.system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          configPath
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.zackerthescar = import homePath;
+          }
+        ] ++ cfg.extraModules;
+      };
+
   in {
     nixosConfigurations = nixpkgs.lib.mapAttrs mkNixOsSystem nixosMachines;
-    # You'll need to add darwinConfigurations too if you want them
+    darwinConfigurations = nixpkgs.lib.mapAttrs mkDarwinSystem darwinMachines;
   };
 }
