@@ -41,84 +41,58 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, zen-browser, ... }@inputs: {
-    nixosConfigurations = {
-      # Thinkpad T520
-      pathfinder = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [
-          ./nixos/pathfinder/configuration.nix
-          # nixos-hardware.nixosModules.lenovo-thinkpad-t520
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import ./home-manager/pathfinder/home.nix;
-	          home-manager.backupFileExtension = "backup";
-          }
-        ];
+outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, zen-browser, ... }@inputs:
+  let
+    nixosMachines = {
+      pathfinder = {
+        extraModules = [ nixos-hardware.nixosModules.lenovo-thinkpad-t520 ];
       };
-      # Thinkpad X230
-      agena = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [
-          ./nixos/agena/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import ./home-manager/agena/home.nix;
-	          home-manager.backupFileExtension = "backup";
-          }
-        ];
+      agena = {
+        # Agena is bog standard
       };
-      # Custom Desktop
-      atlantis = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [
+      atlantis = {
+        extraModules = [
           lanzaboote.nixosModules.lanzaboote
-          ./nixos/atlantis/configuration.nix
-          (import ./overlays/default.nix)
+        ];
+      };
+    };
+
+    darwinMachines = {
+      discovery = {
+        system = "aarch64-darwin";
+      };
+    };
+
+    mkNixOsSystem = name: config: 
+      let
+        configPath = config.configPath or (./nixos + "/${name}/configuration.nix");
+        homePath = config.homePath or (./home-manager + "/${name}/home.nix");
+        defaults = {
+          system = "x86_64-linux";
+          backupExtension = "backup";
+          extraModules = [];
+          homeExtraArgs = {};
+        };
+        cfg = defaults // config;  # You need to merge config with defaults
+      in
+      nixpkgs.lib.nixosSystem {
+        system = cfg.system;
+        specialArgs = { inherit inputs; };  # Missing semicolon here
+        modules = [
+          configPath
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; system = "x86_64-linux"; };
-            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
-            home-manager.users.zackerthescar = import ./home-manager/atlantis/home.nix;
-	          home-manager.backupFileExtension = "backup-2";
+            home-manager.extraSpecialArgs = { inherit inputs; } // cfg.homeExtraArgs;
+            home-manager.users.zackerthescar = import homePath;
+            home-manager.backupFileExtension = cfg.backupExtension;  # Use cfg instead of defaults
           }
-        ];
+          (import ./overlays/default.nix)
+        ] ++ cfg.extraModules;
       };
-    };
-    darwinConfigurations = {
-      columbia = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./nix-darwin/columbia/default.nix
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import ./home-manager/columbia/home.nix;
-          }
-        ];
-      };
-      discovery = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./nix-darwin/discovery/default.nix
-          (import ./overlays/default-darwin.nix)
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import ./home-manager/discovery/home.nix;
-          }
-        ];
-      };
-    };
+
+  in {
+    nixosConfigurations = nixpkgs.lib.mapAttrs mkNixOsSystem nixosMachines;
+    # You'll need to add darwinConfigurations too if you want them
   };
 }

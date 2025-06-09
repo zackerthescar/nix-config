@@ -29,7 +29,7 @@ with pkgs;
             { name = "themes/theunraveler";      tags = [from:oh-my-zsh]; }
             # { name = "plugins/vi-mode";           tags = [from:oh-my-zsh]; }
             # { name = "plugins/cargo";             tags = [from:oh-my-zsh]; }
-            # { name = "plugins/direnv";            tags = [from:oh-my-zsh]; }
+            { name = "plugins/direnv";            tags = [from:oh-my-zsh]; }
             # { name = "plugins/pass";              tags = [from:oh-my-zsh]; }
             # { name = "plugins/rsync";             tags = [from:oh-my-zsh]; }
             # { name = "plugins/"; tags = [from:oh-my-zsh]; }
