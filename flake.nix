@@ -39,9 +39,22 @@
       flake = false;
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
   };
 
-outputs = { nixpkgs, home-manager, nixos-hardware, darwin, lanzaboote, plasma-manager, zen-browser, ... }@inputs:
+outputs = { nixpkgs, 
+            home-manager, 
+            nixos-hardware, 
+            darwin, 
+            lanzaboote, 
+            plasma-manager, 
+            zen-browser, 
+            ghostty, 
+            ... 
+}@inputs:
   let
     nixosMachines = {
       pathfinder = {
