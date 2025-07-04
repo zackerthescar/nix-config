@@ -28,5 +28,6 @@ with pkgs;
         calibre
         signal-desktop
         alacritty
+        obs-studio-riley
     ];
 }

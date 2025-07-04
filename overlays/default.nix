@@ -26,6 +26,9 @@
             zulu
           ];
         };
+        obs-studio-riley = super.obs-studio.override {
+          cudaSupport = true;
+        };
     })
   ];
 }

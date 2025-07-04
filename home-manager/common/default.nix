@@ -19,6 +19,11 @@ with pkgs;
         btop
         wimlib
         texliveMedium
+        texlivePackages.preprint
         texlivePackages.enumitem
+        texlivePackages.hvfloat
+        texlivePackages.titlesec
+        texlivePackages.marvosym
+        texlivePackages.fancyhdr
     ];
 }
