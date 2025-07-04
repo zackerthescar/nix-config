@@ -4,13 +4,14 @@ with lib;
 with pkgs;
 
 {
+    services.gnome-keyring.enable = true;
     home.packages = with pkgs; [
-        waybar
         mako
         wl-clipboard
         shotman
         wofi
         xfce.thunar
+        pkgs.gcr
     ];
     wayland.windowManager.sway = {
         enable = true;
@@ -19,11 +20,24 @@ with pkgs;
             modifier = "Mod4";
             terminal = "alacritty";
             bars = [ ];
+            output = {
+                "DP-1" = {
+                    pos = "0 0";
+                    res = "1920x1080@143.981Hz";
+                    bg = "${../../../../assets/celeste.png} fill";
+                };
+                "DVI-D-1" = {
+                    pos = "1920 15";
+                    res = "1680x1050@59.954Hz";
+                    bg = "${../../../../assets/bocchi.png} fill";
+                };
+            };
         };
         extraOptions = [
             "--unsupported-gpu"
         ];
         extraConfig = ''
+            font pango:Atkinson Hyperlegible Next Regular 10
             bar {
                 swaybar_command waybar
             }
@@ -54,4 +68,56 @@ with pkgs;
             bindsym $mod+Shift+space        floating toggle
         '';
     };
+    programs.waybar = {
+        enable = true;
+        package = pkgs.waybar;
+        style = builtins.readFile ./style.css;
+        settings = {
+            mainBar = {
+                layer = "top";
+                position = "top";
+                height = 32;
+                spacing = 4;
+                modules-left = [ "sway/workspaces" "sway/mode" ];
+                modules-center = [ "custom/applauncher" ];
+                modules-right = [ "pulseaudio" "network" "tray" "clock"];
+                pulseaudio = {
+                    on-click = "pavucontrol";
+                };
+            };
+        };
+    };
+    gtk = {
+        enable = true;
+        iconTheme = {
+            name = "Papirus-Light";
+            package = pkgs.papirus-icon-theme;
+        };
+        theme = {
+            name = "catppuccin-macchiato-teal-compact";
+            package = pkgs.catppuccin-gtk.override {
+                accents = [ "teal" ];
+                size = "compact";
+                variant = "macchiato";
+            };
+        };
+    };
+    qt = {
+        enable = true;
+        style = {
+            name = "Catppuccin-Macchiato-Teal";
+            package = pkgs.catppuccin-kde.override {
+                accents = [ "teal" ];
+                flavour = [ "macchiato" ];
+                winDecStyles = [ "modern" "classic" ];
+            };
+        };
+        platformTheme = {
+            name = "Catppuccin-Macchiato-Teal";
+        };
+    };
+    home.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+        GTK_THEME = "catppuccin-macchiato-teal-compact";
+    }; 
 }

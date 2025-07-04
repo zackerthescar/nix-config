@@ -18,11 +18,13 @@ with pkgs;
         proggyfonts
         font-awesome
         cascadia-code
+        atkinson-hyperlegible-next
+        ibm-plex
       ];
       fontconfig = {
         defaultFonts = {
-          serif = [ "Noto Serif" ];
-          sansSerif = [ "Noto Sans" ];
+          serif = [ "IBM Plex Serif" ];
+          sansSerif = [ "Atkinson Hyperlegible Next" ];
           monospace = [ "Cascadia Code" ];
         };
       };

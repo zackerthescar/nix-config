@@ -5,7 +5,7 @@ with pkgs;
 {
     imports = [
         # ./theme/gtk.nix
-        ./theme/plasma.nix
+        # ./theme/plasma.nix
         ./theme/sway.nix
         ./mpv.nix
         ./vscode.nix
@@ -29,5 +29,6 @@ with pkgs;
         signal-desktop
         alacritty
         obs-studio-riley
+        inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 }

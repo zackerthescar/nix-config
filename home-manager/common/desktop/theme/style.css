@@ -1,0 +1,14 @@
+* {
+    font-family: Atkinson Hyperlegible Next;
+    border-radius: 8;
+    font-size: 14px;
+    padding: 0px;
+    background: transparent;
+}
+
+window#waybar {
+    background-image: linear-gradient(to bottom, #141216 100%);
+    border-radius: 14px;
+    padding: 0px;
+    border-style: none;
+}
