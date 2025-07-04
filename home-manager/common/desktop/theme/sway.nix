@@ -29,7 +29,7 @@ with pkgs;
                 "DVI-D-1" = {
                     pos = "1920 15";
                     res = "1680x1050@59.954Hz";
-                    bg = "${../../../../assets/bocchi.png} fill";
+                    bg = "${../../../../assets/bocchi.jpg} fill";
                 };
             };
         };
