@@ -4,14 +4,16 @@ with lib;
 with pkgs;
 
 {
-    services.gnome-keyring.enable = true;
     home.packages = with pkgs; [
         mako
         wl-clipboard
         shotman
         wofi
-        xfce.thunar
         pkgs.gcr
+        xfce.thunar
+        xfce.thunar-volman
+        xfce.thunar-archive-plugin
+        file-roller
     ];
     wayland.windowManager.sway = {
         enable = true;

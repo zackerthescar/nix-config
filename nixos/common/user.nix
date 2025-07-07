@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ...}:
+{ inputs, config, pkgs, lib, ...}:
 
 let
    inherit (inputs) ssh-keys;
@@ -11,6 +11,12 @@ in
       extraGroups = [ "wheel" "networkmanager" "video" "gamemode" ];
       home = "/home/zackerthescar";
       shell = pkgs.zsh;
-      openssh.authorizedKeys.keyFiles = [ ssh-keys.outPath ];
+      openssh.authorizedKeys.keys = 
+	let 
+		keys = builtins.readFile ssh-keys;
+		keyList = builtins.filter (key: key != "")
+			(lib.splitString "\n" keys);
+		in
+		keyList;
    };
 }

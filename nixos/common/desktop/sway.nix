@@ -12,5 +12,8 @@
         xdg-desktop-portal-wlr
         ];
     };
+    services.gnome.gnome-keyring.enable = true;
     security.pam.services.login.enableGnomeKeyring = true;
+    services.gvfs.enable = true;
+    services.tumbler.enable = true;
 }
