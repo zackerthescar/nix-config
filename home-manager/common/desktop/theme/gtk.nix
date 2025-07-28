@@ -7,16 +7,20 @@ with pkgs;
     gtk = {
         enable = true;
         iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
+            name = "Papirus-Dark";
+            package = pkgs.papirus-icon-theme;
         };
         theme = {
-        name = "catppuccin-macchiato-teal-compact";
-        package = pkgs.catppuccin-gtk.override {
-            accents = [ "teal" ];
-            size = "compact";
-            variant = "macchiato";
+            name = "catppuccin-macchiato-teal-compact";
+            package = pkgs.catppuccin-gtk.override {
+                accents = [ "teal" ];
+                size = "compact";
+                variant = "macchiato";
+            };
         };
+        cursorTheme = {
+            package = pkgs.catppuccin-cursors.macchiatoTeal;
+            name = "catppuccin-macchiato-teal-cursors";
         };
     };
     qt = {
@@ -48,8 +52,8 @@ with pkgs;
     dconf.settings = {
         "org/gnome/desktop/interface" = {
         	color-scheme = "prefer-dark";
-            font-name = "SF Pro Display 10";
-            monospace-font-name = "SF Mono 10";
+            font-name = "Atkinson Hyperlegible Next 10";
+            monospace-font-name = "Cascadia Mono 10";
             font-antialiasing = "rgba";
         };
         "org/gnome/desktop/wm/preferences" = {
@@ -63,13 +67,13 @@ with pkgs;
                 "arcmenu@arcmenu.com"
                 "blur-my-shell@aunetx"
                 "dash-to-dock@micxgx.gmail.com"
-		];
+		    ];
         };
         "org/gnome/shell/extensions/user-theme" = {
         	name = "catppuccin-macchiato-teal-compact";
         };
-	"org/gnome/desktop/peripherals/touchpad" = {
-		tap-to-click = "true";
-	};
+        "org/gnome/desktop/peripherals/touchpad" = {
+            tap-to-click = "true";
+        };
     };
 }

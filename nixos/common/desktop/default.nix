@@ -3,9 +3,9 @@
 {
     imports = [
         ./fonts.nix
-        # ./gnome.nix
+        ./gnome.nix
         # ./plasma.nix
-        ./sway.nix
+        # ./sway.nix
         ./steam.nix
         ./services.nix
     ];

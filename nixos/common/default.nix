@@ -26,5 +26,7 @@
     (lib.hiPrio pkgs.uutils-coreutils-noprefix)
     podman-compose
     docker-compose
+    xorg.xauth
+    gnupg
   ];
 }
