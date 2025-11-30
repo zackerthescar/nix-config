@@ -1,16 +1,16 @@
-{ inputs, config, lib, pkgs, ...}:
+{ inputs, config, lib, pkgs, catppuccin, ...}:
 
 with pkgs;
 
 {
     imports = [
-        ./theme/gtk.nix
-        # ./theme/plasma.nix
+        # ./theme/gtk.nix
+        ./theme/plasma.nix
         # ./theme/sway.nix
         ./mpv.nix
         ./vscode.nix
         ./discord.nix
-	./virt-manager.nix
+	    ./virt-manager.nix
     ];
     home.packages = with pkgs; [
         papirus-icon-theme
@@ -31,4 +31,9 @@ with pkgs;
         obs-studio-riley
         inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
+    catppuccin = {
+        enable = true;
+        accent = "teal";
+        flavor = "macchiato";
+    };
 }

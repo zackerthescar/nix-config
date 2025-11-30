@@ -12,5 +12,6 @@ with pkgs;
           credential.helper = "cache";
           init.defaultBranch = "main";
         };
+        signing.format = "ssh";
   };
 }

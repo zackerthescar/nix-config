@@ -10,7 +10,7 @@ with pkgs;
         inputs.apple-fonts.packages.${pkgs.system}.sf-mono
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         fira-code
         fira-code-symbols
         mplus-outline-fonts.githubRelease

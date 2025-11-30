@@ -1,9 +1,8 @@
 # ./overlays/default.nix
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 
 {
   nixpkgs.overlays = [
-    inputs.catppuccin-vsc.overlays.default
     (self: super: {
         ffmpeg-riley = super.ffmpeg.override {
             withUnfree = true;
@@ -20,10 +19,10 @@
         };
         prismlauncher-riley = super.prismlauncher.override {
           jdks = with pkgs; [
-            graalvm-ce
             zulu8
             zulu17
             zulu
+	    graalvmPackages.graalvm-ce
           ];
         };
         obs-studio-riley = super.obs-studio.override {

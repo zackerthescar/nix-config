@@ -43,6 +43,10 @@
       url = "github:ghostty-org/ghostty";
     };
 
+    catppuccin = {
+      url = "github:catppuccin/nix";
+    };
+
   };
 
 outputs = { nixpkgs, 
@@ -53,6 +57,7 @@ outputs = { nixpkgs,
             plasma-manager, 
             zen-browser, 
             ghostty, 
+            catppuccin,
             ... 
 }@inputs:
   let
@@ -67,8 +72,10 @@ outputs = { nixpkgs,
         backupExtension = "backup-2";
         extraModules = [
           lanzaboote.nixosModules.lanzaboote
-          (import ./overlays/default.nix)
         ];
+        homeExtraArgs = { system = "x86_64-linux"; };
+      };
+      endurance = {
         homeExtraArgs = { system = "x86_64-linux"; };
       };
     };
@@ -102,13 +109,14 @@ outputs = { nixpkgs,
         specialArgs = { inherit inputs; };
         modules = [
           configPath
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs;};
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import homePath;
             home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager catppuccin.homeModules.catppuccin ];
           }
           (import ./overlays/default.nix)
         ] ++ cfg.extraModules;
