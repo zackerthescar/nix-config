@@ -11,11 +11,11 @@ with pkgs;
             package = pkgs.papirus-icon-theme;
         };
         theme = {
-            name = "catppuccin-macchiato-teal-compact";
-            package = pkgs.catppuccin-gtk.override {
-                accents = [ "teal" ];
+            name = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
+            package = pkgs.magnetic-catppuccin-gtk.override {
+                accent = [ "teal" ] ;
                 size = "compact";
-                variant = "macchiato";
+                tweaks = [ "macchiato" "float" "macos" ];
             };
         };
         cursorTheme = {
@@ -39,7 +39,7 @@ with pkgs;
     };
     home.sessionVariables = {
             NIXOS_OZONE_WL = "1";
-            GTK_THEME = "catppuccin-macchiato-teal-compact";
+            GTK_THEME = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
     }; 
     home.packages = with pkgs; [
         pkgs.gnome-tweaks
@@ -53,11 +53,12 @@ with pkgs;
         "org/gnome/desktop/interface" = {
         	color-scheme = "prefer-dark";
             font-name = "Atkinson Hyperlegible Next 10";
+            document-font-name = "IBM Plex Serif 10";
             monospace-font-name = "Cascadia Mono 10";
             font-antialiasing = "rgba";
         };
         "org/gnome/desktop/wm/preferences" = {
-        	theme = "catppuccin-macchiato-teal-compact";
+        	theme = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
         	button-layout = "appmenu:minimize,maximize,close";
         };
         "org/gnome/shell" = {
@@ -70,7 +71,7 @@ with pkgs;
 		    ];
         };
         "org/gnome/shell/extensions/user-theme" = {
-        	name = "catppuccin-macchiato-teal-compact";
+        	name = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
         };
         "org/gnome/desktop/peripherals/touchpad" = {
             tap-to-click = "true";

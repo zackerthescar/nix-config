@@ -17,7 +17,6 @@ with pkgs;
         hyfetch
         htop
         btop
-        wimlib
         texliveMedium
         texlivePackages.preprint
         texlivePackages.enumitem

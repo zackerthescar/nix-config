@@ -14,7 +14,6 @@ with pkgs;
     ];
     home.packages = with pkgs; [
         papirus-icon-theme
-        inputs.zen-browser.packages."${system}".default
         firefox
         yt-dlp
         spotify
@@ -30,6 +29,7 @@ with pkgs;
         alacritty
         obs-studio-riley
         inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+        alvr
     ];
     catppuccin = {
         enable = true;

@@ -4,7 +4,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
-        ffmpeg-riley = super.ffmpeg.override {
+        ffmpeg-riley = super.ffmpeg_8.override {
             withUnfree = true;
             withDav1d = true;
             withSvtav1 = true;

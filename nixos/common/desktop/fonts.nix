@@ -6,8 +6,6 @@ with pkgs;
     fonts = {
       enableDefaultPackages = true;
       packages = with pkgs;  [
-        inputs.apple-fonts.packages.${pkgs.system}.sf-pro
-        inputs.apple-fonts.packages.${pkgs.system}.sf-mono
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-color-emoji

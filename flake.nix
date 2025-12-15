@@ -9,17 +9,14 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
     # nix-darwin
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Apple fonts
-    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
-
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -52,10 +49,10 @@
 outputs = { nixpkgs, 
             home-manager, 
             nixos-hardware, 
+            chaotic,
             darwin, 
             lanzaboote, 
             plasma-manager, 
-            zen-browser, 
             ghostty, 
             catppuccin,
             ... 
