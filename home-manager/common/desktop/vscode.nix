@@ -57,6 +57,7 @@
         ];
         userSettings = {
             "window.titleBarStyle" = "native";
+            "claudeCode.claudeProcessWrapper" = "${pkgs.claude-code}/bin/claude";
         };
       };
     };
