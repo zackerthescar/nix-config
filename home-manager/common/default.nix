@@ -24,5 +24,7 @@ with pkgs;
         texlivePackages.titlesec
         texlivePackages.marvosym
         texlivePackages.fancyhdr
+        # opium
+        claude-code
     ];
 }

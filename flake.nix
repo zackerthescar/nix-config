@@ -9,7 +9,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
 
     # nix-darwin
     darwin.url = "github:lnl7/nix-darwin";
@@ -49,7 +49,7 @@
 outputs = { nixpkgs, 
             home-manager, 
             nixos-hardware, 
-            chaotic,
+            nix-cachyos-kernel,
             darwin, 
             lanzaboote, 
             plasma-manager, 
@@ -103,7 +103,7 @@ outputs = { nixpkgs,
       in
       nixpkgs.lib.nixosSystem {
         system = cfg.system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; inherit nix-cachyos-kernel; };
         modules = [
           configPath
           catppuccin.nixosModules.catppuccin
@@ -113,7 +113,7 @@ outputs = { nixpkgs,
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import homePath;
             home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager catppuccin.homeModules.catppuccin ];
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager catppuccin.homeModules.catppuccin ];
           }
           (import ./overlays/default.nix)
         ] ++ cfg.extraModules;

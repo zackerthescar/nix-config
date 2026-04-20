@@ -13,7 +13,6 @@ with pkgs;
 	    ./virt-manager.nix
     ];
     home.packages = with pkgs; [
-        papirus-icon-theme
         firefox
         yt-dlp
         spotify

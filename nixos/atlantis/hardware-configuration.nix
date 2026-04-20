@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -30,22 +30,8 @@
   fileSystems."/nix" =
     { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" "noatime" ];
+      options = [ "subvol=nix" "compress=zstd" ];
     };
-
-  fileSystems."/mnt/hdd0" =
-    { device = "/dev/mapper/hdd0";
-      fsType = "btrfs";
-    };
-
-  boot.initrd.luks.devices."hdd0".device = "/dev/disk/by-uuid/84608766-9c74-4aa7-a499-3e75e8c1ae7f";
-
-  fileSystems."/mnt/hdd1" =
-    { device = "/dev/mapper/hdd1";
-      fsType = "btrfs";
-    };
-
-  boot.initrd.luks.devices."hdd1".device = "/dev/disk/by-uuid/74d218d6-e8d7-461a-84b3-cd828efa8e74";
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6ADD-4431";
@@ -54,14 +40,6 @@
     };
 
   swapDevices = [ ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp9s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp5s0b1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -15,5 +15,4 @@
       enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry-curses;
     };
-    services.udev.packages = [ pkgs.android-udev-rules ];
 }

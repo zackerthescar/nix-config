@@ -28,5 +28,7 @@
     docker-compose
     xorg.xauth
     gnupg
+    exfat
+    exfatprogs
   ];
 }

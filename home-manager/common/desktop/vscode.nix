@@ -21,7 +21,7 @@
     mutableExtensionsDir = false;
     profiles = {
       default = {
-        extensions = with pkgs.vscode-extensions; [
+        extensions = (with pkgs.vscode-extensions; [
           # C/C++ Extension Pack
           ms-vscode.cpptools
           twxs.cmake
@@ -47,6 +47,13 @@
           james-yu.latex-workshop
           # direnv
           mkhl.direnv
+        ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "claude-code";
+            publisher = "anthropic";
+            version = "2.1.116";
+            sha256 = "1dh59kh8vlvdhpwg35w379qlw3nnw9h2igp5adifcs86hiww9cp3";
+          }
         ];
         userSettings = {
             "window.titleBarStyle" = "native";
