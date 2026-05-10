@@ -9,8 +9,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
-
     # nix-darwin
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -40,21 +38,21 @@
       url = "github:ghostty-org/ghostty";
     };
 
-    catppuccin = {
-      url = "github:catppuccin/nix";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
     };
+
 
   };
 
 outputs = { nixpkgs, 
             home-manager, 
             nixos-hardware, 
-            nix-cachyos-kernel,
             darwin, 
             lanzaboote, 
             plasma-manager, 
             ghostty, 
-            catppuccin,
+            nix-cachyos-kernel,
             ... 
 }@inputs:
   let
@@ -68,6 +66,7 @@ outputs = { nixpkgs,
       atlantis = {
         backupExtension = "backup-2";
         extraModules = [
+          (import ./overlays/default.nix)
           lanzaboote.nixosModules.lanzaboote
         ];
         homeExtraArgs = { system = "x86_64-linux"; };
@@ -103,19 +102,17 @@ outputs = { nixpkgs,
       in
       nixpkgs.lib.nixosSystem {
         system = cfg.system;
-        specialArgs = { inherit inputs; inherit nix-cachyos-kernel; };
+        specialArgs = { inherit inputs; };
         modules = [
           configPath
-          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import homePath;
             home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager catppuccin.homeModules.catppuccin ];
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
           }
-          (import ./overlays/default.nix)
         ] ++ cfg.extraModules;
       };
 

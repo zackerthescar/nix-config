@@ -23,12 +23,13 @@
     nano
     tpm2-tss
     tpm2-tools
-    (lib.hiPrio pkgs.uutils-coreutils-noprefix)
     podman-compose
     docker-compose
     xorg.xauth
     gnupg
     exfat
     exfatprogs
-  ];
+    i2c-tools
+    ddcutil
+    ];
 }

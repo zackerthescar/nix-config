@@ -1,4 +1,10 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
+
+let
+  catppuccin-vsc-teal = inputs.catppuccin-vsc.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+    accent = "teal";
+  };
+in
 
 {
     home.packages = with pkgs; [
@@ -47,17 +53,16 @@
           james-yu.latex-workshop
           # direnv
           mkhl.direnv
-        ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "claude-code";
-            publisher = "anthropic";
-            version = "2.1.116";
-            sha256 = "1dh59kh8vlvdhpwg35w379qlw3nnw9h2igp5adifcs86hiww9cp3";
-          }
+        ]) ++ [
+          # Theme — flake input lets us bake teal accent in at build time.
+          catppuccin-vsc-teal
         ];
         userSettings = {
             "window.titleBarStyle" = "native";
             "claudeCode.claudeProcessWrapper" = "${pkgs.claude-code}/bin/claude";
+            "window.autoDetectColorScheme" = true;
+            "workbench.preferredLightColorTheme" = "Catppuccin Latte";
+            "workbench.preferredDarkColorTheme" = "Catppuccin Macchiato";
         };
       };
     };

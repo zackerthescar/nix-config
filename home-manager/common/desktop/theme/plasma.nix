@@ -17,6 +17,10 @@ with pkgs;
                 tweaks = [ "macchiato" "float" "macos" ];
             };
         };
+        cursorTheme = {
+            package = pkgs.catppuccin-cursors.macchiatoTeal;
+            name = "catppuccin-macchiato-teal-cursors";
+        };
     };
     qt = {
         enable = true;
@@ -32,16 +36,8 @@ with pkgs;
             name = "Catppuccin-Macchiato-Teal";
         };
     };
-    home.sessionVariables = {
-            NIXOS_OZONE_WL = "1";
-            GTK_THEME = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
-    }; 
     programs.plasma = {
         enable = true;
-        workspace = {
-            # iconTheme = "Papirus-Dark";
-            lookAndFeel = "Catppuccin-Macchiato-Teal";
-        };
         panels = [
             {
                 location = "bottom";

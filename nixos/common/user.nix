@@ -6,9 +6,10 @@ in
 
 {
   programs.zsh.enable = true;
+  hardware.i2c.enable = true;
   users.users.zackerthescar = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "video" "gamemode" "podman" ];
+      extraGroups = [ "wheel" "networkmanager" "video" "gamemode" "podman" "i2c" ];
       home = "/home/zackerthescar";
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = 

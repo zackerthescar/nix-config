@@ -1,11 +1,11 @@
-{ inputs, config, lib, pkgs, catppuccin, ...}:
+{ inputs, config, lib, pkgs, ...}:
 
 with pkgs;
 
 {
     imports = [
-        # ./theme/gtk.nix
-        ./theme/plasma.nix
+        ./theme/gtk.nix
+        # ./theme/plasma.nix
         # ./theme/sway.nix
         ./mpv.nix
         ./vscode.nix
@@ -30,9 +30,4 @@ with pkgs;
         inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
         alvr
     ];
-    catppuccin = {
-        enable = true;
-        accent = "teal";
-        flavor = "macchiato";
-    };
 }
