@@ -40,6 +40,8 @@
 
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
+    catppuccin = {
+      url = "github:catppuccin/nix";
     };
 
 
@@ -51,8 +53,12 @@ outputs = { nixpkgs,
             darwin, 
             lanzaboote, 
             plasma-manager, 
+<<<<<<< Updated upstream
             ghostty, 
             nix-cachyos-kernel,
+=======
+            catppuccin,
+>>>>>>> Stashed changes
             ... 
 }@inputs:
   let
@@ -82,6 +88,7 @@ outputs = { nixpkgs,
       };
       discovery = {
         system = "aarch64-darwin";
+        backupExtension = "backup-2";
         extraModules = [
           (import ./overlays/default-darwin.nix)
         ];
@@ -135,6 +142,8 @@ outputs = { nixpkgs,
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import homePath;
+            home-manager.backupFileExtension = cfg.backupExtension;
+            home-manager.sharedModules = [ catppuccin.homeModules.catppuccin ];
           }
         ] ++ cfg.extraModules;
       };

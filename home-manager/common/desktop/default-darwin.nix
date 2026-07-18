@@ -7,16 +7,23 @@ with pkgs;
         ./mpv.nix
         ./vscode-darwin.nix
         # ./discord.nix
-	./virt-manager.nix
+        # ./virt-manager.nix
     ];
     home.packages = with pkgs; [
         # firefox
         yt-dlp
-        spotify
+        # spotify
         # vlc
-	musescore
-	iterm2
-	utm
-	#calibre
+        iterm2
+        utm
+        #calibre
+        # virt-manager
+        alacritty
     ];
+    catppuccin = {
+        autoEnable = true;
+        enable = true;
+        accent = "teal";
+        flavor = "macchiato";
+    };
 }

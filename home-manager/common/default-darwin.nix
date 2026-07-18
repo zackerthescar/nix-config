@@ -8,7 +8,6 @@ with pkgs;
         ./zsh.nix
         ./tmux.nix
         ./zellij.nix
-        ./ffmpeg.nix
     ];
     home.packages = with pkgs; [
         fortune
@@ -16,7 +15,11 @@ with pkgs;
         fastfetch
         hyfetch
         htop
-	btop
-	wimlib
+        btop
+        ffmpeg
+        ghostty-bin
+        (pkgs.lib.hiPrio pkgs.ffmpreg)
+        atomicparsley
+        flac
     ];
 }
