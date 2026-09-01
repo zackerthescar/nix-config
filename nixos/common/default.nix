@@ -29,6 +29,7 @@
     gnupg
     exfat
     exfatprogs
+    e2fsprogs
     i2c-tools
     ddcutil
     ];

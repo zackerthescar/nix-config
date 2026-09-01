@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -16,21 +16,21 @@
   fileSystems."/" =
     { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=root" "compress=zstd" ];
+      options = [ "subvol=root" ];
     };
 
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/ffa90a2c-2157-4062-92cc-098c6f32bf37";
 
-  fileSystems."/home" =
-    { device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "subvol=home" "compress=zstd" ];
-    };
-
   fileSystems."/nix" =
     { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" ];
+      options = [ "subvol=nix" "compress=zstd:7" "noatime" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
     };
 
   fileSystems."/boot" =
@@ -38,6 +38,22 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
+
+  fileSystems."/mnt/hdd1" =
+    { device = "/dev/mapper/hdd1";
+      fsType = "btrfs";
+      options = [ "compress=zstd:7" ];
+    };
+
+  boot.initrd.luks.devices."hdd1".device = "/dev/disk/by-uuid/74d218d6-e8d7-461a-84b3-cd828efa8e74";
+
+  fileSystems."/mnt/ssd1" =
+    { device = "/dev/mapper/ssd1";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+
+  boot.initrd.luks.devices."ssd1".device = "/dev/disk/by-uuid/a1448709-cecf-44e1-893f-09aa92ddf956";
 
   swapDevices = [ ];
 

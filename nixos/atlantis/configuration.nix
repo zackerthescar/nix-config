@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, nix-cachyos-kernel, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -11,6 +11,9 @@
       ../common/default.nix
       ../common/desktop/default.nix
     ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -67,6 +70,7 @@ zramSwap = {
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.usbmuxd.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -75,7 +79,7 @@ zramSwap = {
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
   
 

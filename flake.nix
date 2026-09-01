@@ -40,10 +40,13 @@
 
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
+    };
     catppuccin = {
       url = "github:catppuccin/nix";
     };
-
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
 
   };
 
@@ -53,12 +56,10 @@ outputs = { nixpkgs,
             darwin, 
             lanzaboote, 
             plasma-manager, 
-<<<<<<< Updated upstream
             ghostty, 
             nix-cachyos-kernel,
-=======
             catppuccin,
->>>>>>> Stashed changes
+            llm-agents,
             ... 
 }@inputs:
   let

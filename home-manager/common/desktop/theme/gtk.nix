@@ -52,6 +52,7 @@ in
 	    gnomeExtensions.arcmenu
         gnomeExtensions.dash-to-dock
         gnomeExtensions.brightness-control-using-ddcutil
+        hydrapaper
     ];
     dconf.settings = {
         "org/gnome/desktop/interface" = {

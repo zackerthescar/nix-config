@@ -8,7 +8,6 @@ with pkgs;
         ./zsh.nix
         ./tmux.nix
         ./zellij.nix
-        ./ffmpeg.nix
     ];
     home.packages = with pkgs; [
         fortune
@@ -25,5 +24,6 @@ with pkgs;
         texlivePackages.marvosym
         texlivePackages.fancyhdr
         claude-code-bin
+        (pkgs.lib.hiPrio pkgs.ffmpreg)
     ];
 }
