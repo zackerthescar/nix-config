@@ -8,7 +8,6 @@
 			"balenaetcher"
 			"mactex"
 			"calibre"
-			"hakuneko"
 			"font-hack-nerd-font"
 		];
 	};
