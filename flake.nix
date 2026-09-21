@@ -48,6 +48,10 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    open-apollo = {
+      url = "github:rolotrealanis98/open-apollo";
+    };
+
   };
 
 outputs = { nixpkgs, 
@@ -60,6 +64,7 @@ outputs = { nixpkgs,
             nix-cachyos-kernel,
             catppuccin,
             llm-agents,
+            open-apollo,
             ... 
 }@inputs:
   let
@@ -75,6 +80,7 @@ outputs = { nixpkgs,
         extraModules = [
           (import ./overlays/default.nix)
           lanzaboote.nixosModules.lanzaboote
+          open-apollo.nixosModules.default
         ];
         homeExtraArgs = { system = "x86_64-linux"; };
       };

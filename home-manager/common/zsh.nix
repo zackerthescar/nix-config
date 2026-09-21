@@ -7,6 +7,7 @@ with pkgs;
     # zsh config
     programs.zsh = {
         enable = true;
+        autosuggestion.enable = true; # Enable autosuggestions
         initContent = "any-nix-shell zsh --info-right | source /dev/stdin";
         history = {
             size = 8192;
@@ -23,7 +24,6 @@ with pkgs;
             { name = "plugins/git";               tags = [from:oh-my-zsh]; }
             { name = "plugins/ripgrep";           tags = [from:oh-my-zsh]; }
             { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
-            { name = "zsh-users/zsh-autosuggestions";}
             { name = "zsh-users/zsh-syntax-highlighting";}
             { name = "zsh-users/zsh-history-substring-search";}
             { name = "themes/theunraveler";      tags = [from:oh-my-zsh]; }
@@ -40,13 +40,13 @@ with pkgs;
     };
 
     #fzf
-    programs.fzf = {
-        enable = true;
-        enableZshIntegration = true;
-    };
+    # programs.fzf = {
+    #     enable = true;
+    #     enableZshIntegration = true;
+    # };
 
     home.packages = with pkgs; [
-	any-nix-shell
+	    any-nix-shell
     ];
 
     programs.direnv = {
@@ -54,5 +54,8 @@ with pkgs;
         enableZshIntegration = true;
         nix-direnv.enable = true;
     };
-
+    programs.atuin = {
+        enable = true;
+        enableZshIntegration = true;
+    };
 }

@@ -20,8 +20,6 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.initrd.availableKernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-  boot.kernelModules = [ "ddcci_backlight" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
   boot.kernelParams = [ "mem_sleep_default=s2idle" ];
   boot.lanzaboote = {
     enable = true;
@@ -82,6 +80,7 @@ zramSwap = {
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
   
+  hardware.ua-apollo.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "us";
@@ -95,8 +94,11 @@ zramSwap = {
     alsa.enable = true;
     pulse.enable = true;
     jack.enable = true;
+    alsa.support32Bit = true;
   };
-
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 

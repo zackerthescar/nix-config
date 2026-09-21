@@ -15,8 +15,12 @@ let
         size = "compact";
         tweaks = [ "macchiato" "macos" ];
     };
-    gtkThemeLatte = "Catppuccin-GTK-Teal-Light-Compact";
-    gtkThemeMacchiato = "Catppuccin-GTK-Teal-Dark-Compact-Macchiato";
+    # These must match the directory names magnetic-catppuccin-gtk actually
+    # installs under $out/share/themes. Verify after a nixpkgs bump with:
+    #   ls $(nix build --no-link --print-out-paths ...)/share/themes
+    # ("-MB" is the `macos` tweak suffix.)
+    gtkThemeLatte = "Catppuccin-GTK-Teal-Light-Compact-MB";
+    gtkThemeMacchiato = "Catppuccin-GTK-Macchiato-Teal-Dark-Compact-MB";
     cursorLatte = "catppuccin-latte-teal-cursors";
     cursorMacchiato = "catppuccin-macchiato-teal-cursors";
     iconLight = "Papirus-Light";
@@ -51,6 +55,7 @@ in
         gnomeExtensions.user-themes
 	    gnomeExtensions.arcmenu
         gnomeExtensions.dash-to-dock
+        gnomeExtensions.blur-my-shell
         gnomeExtensions.brightness-control-using-ddcutil
         hydrapaper
     ];

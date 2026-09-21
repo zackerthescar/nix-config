@@ -20,6 +20,8 @@ in
         automake
         libtool # freetype calls glibtoolize
         python3
+        distrobox
+        code-server
     ];
   # vscode config
   programs.vscode = {

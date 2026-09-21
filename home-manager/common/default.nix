@@ -24,6 +24,7 @@ with pkgs;
         texlivePackages.marvosym
         texlivePackages.fancyhdr
         claude-code-bin
+        codex
         (pkgs.lib.hiPrio pkgs.ffmpreg)
     ];
 }

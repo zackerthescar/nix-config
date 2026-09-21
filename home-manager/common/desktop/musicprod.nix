@@ -2,7 +2,7 @@
 {
 
     home.packages = with pkgs; [
-		reaper
+		(pkgs.reaper.override { jackLibrary = pkgs.pipewire.jack; })
 		lmms
 		hydrogen
 		chow-kick
