@@ -52,6 +52,14 @@
       url = "github:rolotrealanis98/open-apollo";
     };
 
+    zen-browser = {
+    url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        # IMPORTANT: To ensure compatibility with the latest Firefox version, use nixpkgs-unstable.
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
 outputs = { nixpkgs, 
@@ -65,6 +73,7 @@ outputs = { nixpkgs,
             catppuccin,
             llm-agents,
             open-apollo,
+            zen-browser,
             ... 
 }@inputs:
   let
@@ -150,7 +159,7 @@ outputs = { nixpkgs,
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.zackerthescar = import homePath;
             home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ catppuccin.homeModules.catppuccin ];
+            home-manager.sharedModules = [ catppuccin.homeModules.catppuccin zen-browser.homeModules.beta ];
           }
         ] ++ cfg.extraModules;
       };

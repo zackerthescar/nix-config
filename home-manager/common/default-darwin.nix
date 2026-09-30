@@ -17,7 +17,6 @@ with pkgs;
         htop
         btop
         ffmpeg
-        ghostty-bin
         (pkgs.lib.hiPrio pkgs.ffmpreg)
         atomicparsley
         flac
