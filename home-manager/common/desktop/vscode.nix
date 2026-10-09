@@ -4,6 +4,7 @@ let
   catppuccin-vsc-teal = inputs.catppuccin-vsc.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     accent = "teal";
   };
+  llm-agents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in
 
 {
@@ -22,6 +23,9 @@ in
         python3
         distrobox
         code-server
+    ] ++ [
+        llm-agents.claude-code
+        llm-agents.codex
     ];
   # vscode config
   programs.vscode = {

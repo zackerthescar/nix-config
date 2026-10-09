@@ -1,10 +1,14 @@
 # ./overlays/default.nix
-{ inputs, pkgs, lib, ... }:
+{ inputs, config, pkgs, lib, ... }:
 
+let
+  # Only the hosts with an NVIDIA card get the CUDA builds.
+  hasNvidia = lib.elem "nvidia" config.services.xserver.videoDrivers;
+in
 {
   nixpkgs.overlays = [
     (self: super: {
-        ffmpreg = (super.ffmpeg_8.override {
+        ffmpreg = (super.ffmpeg.override {
             withUnfree = true;
             withDav1d = true;
             withSvtav1 = true;
@@ -14,7 +18,7 @@
             withFdkAac = true;
             withMp3lame = true;
             withOpus = true;
-            withCuda = true;
+            withCuda = hasNvidia;
             withZimg = true;
         });
         prismlauncher-riley = super.prismlauncher.override {
@@ -25,9 +29,10 @@
 	    graalvmPackages.graalvm-ce
           ];
         };
-        obs-studio-riley = super.obs-studio.override {
-          cudaSupport = true;
-        };
+        obs-studio-riley =
+          if hasNvidia
+          then super.obs-studio.override { cudaSupport = true; }
+          else super.obs-studio;
     })
   ];
 }

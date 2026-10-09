@@ -20,7 +20,8 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.initrd.availableKernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-  boot.kernelParams = [ "mem_sleep_default=s2idle" ];
+  # MSI X870E firmware has S3 but no LPS0 device, so s2idle cannot reach s0ix.
+  boot.kernelParams = [ "mem_sleep_default=deep" ];
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/var/lib/sbctl";

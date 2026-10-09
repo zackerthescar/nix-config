@@ -27,7 +27,10 @@ with pkgs;
         signal-desktop
         alacritty
         obs-studio-riley
-        inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ghostty
         alvr
     ];
+    programs.zen-browser = {
+        enable = true;
+    };
 }
