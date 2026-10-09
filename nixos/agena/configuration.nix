@@ -12,19 +12,13 @@
       ../common/desktop/default.nix
     ];
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [ "i915" ];
   boot.initrd.kernelModules = [ "i915" ];
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.hostName = "agena";
 
   # Set your time zone.
@@ -55,8 +49,6 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb.layout = "us";
   # services.xserver.xkbOptions = {
   #   "eurosign:e";
   #   "caps:escape" # map caps to escape.

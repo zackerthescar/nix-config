@@ -26,7 +26,8 @@ let
     iconLight = "Papirus-Light";
     iconDark = "Papirus-Dark";
 in
-{
+# GNOME and darkman are Linux-only.
+lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     gtk = {
         enable = true;
         theme = {
@@ -37,10 +38,8 @@ in
             package = pkgs.catppuccin-cursors.macchiatoTeal;
             name = cursorMacchiato;
         };
-        iconTheme = {
-            name = iconDark;
-            package = pkgs.papirus-icon-theme;
-        };
+        # catppuccin.gtk.icon sets iconTheme (Papirus with catppuccin folders).
+        # That package also has Papirus-Light, which darkman switches to.
         # Disable home-manager's static gtk-4.0/gtk.css so darkman can manage it.
         gtk4.theme = null;
     };

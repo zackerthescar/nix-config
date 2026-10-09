@@ -1,8 +1,11 @@
 { config, lib, pkgs, ...}:
 
-with pkgs;
-
 {
+    # home.username and home.homeDirectory come from users.users.<name>
+    # through the home-manager NixOS and nix-darwin modules.
+    home.stateVersion = lib.mkDefault "22.05";
+    programs.home-manager.enable = true;
+
     imports = [
         ./git.nix
         ./zsh.nix
@@ -16,6 +19,9 @@ with pkgs;
         hyfetch
         htop
         btop
+        (lib.hiPrio ffmpreg)
+    ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+        # The darwin hosts get MacTeX from Homebrew.
         texliveMedium
         texlivePackages.preprint
         texlivePackages.enumitem
@@ -23,6 +29,9 @@ with pkgs;
         texlivePackages.titlesec
         texlivePackages.marvosym
         texlivePackages.fancyhdr
-        (pkgs.lib.hiPrio pkgs.ffmpreg)
+    ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
+        ffmpeg
+        atomicparsley
+        flac
     ];
 }

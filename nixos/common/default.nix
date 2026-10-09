@@ -14,6 +14,10 @@
         gpu_device = 0;
       };
     };
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+    networking.networkmanager.enable = true;
+    services.xserver.xkb.layout = "us";
     environment.shells = [pkgs.bash pkgs.zsh];
     programs.ssh.forwardX11 = true;
     environment.systemPackages = with pkgs; [
@@ -25,7 +29,7 @@
     tpm2-tools
     podman-compose
     docker-compose
-    xorg.xauth
+    xauth
     gnupg
     exfat
     exfatprogs

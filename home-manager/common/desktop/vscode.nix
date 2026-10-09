@@ -1,14 +1,12 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 let
-  catppuccin-vsc-teal = inputs.catppuccin-vsc.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    accent = "teal";
-  };
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
   llm-agents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in
 
 {
-    home.packages = with pkgs; [
+    home.packages = lib.optionals isLinux (with pkgs; [
         bison
         flex
         fontforge
@@ -26,18 +24,19 @@ in
     ] ++ [
         llm-agents.claude-code
         llm-agents.codex
-    ];
+    ]);
   # vscode config
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
     profiles = {
       default = {
-        extensions = (with pkgs.vscode-extensions; [
+        extensions = (with pkgs.vscode-extensions; lib.optionals isLinux [
           # C/C++ Extension Pack
           ms-vscode.cpptools
           twxs.cmake
           ms-vscode.cmake-tools
+        ] ++ [
           # Python
           ms-python.python
           # Java
@@ -59,13 +58,13 @@ in
           james-yu.latex-workshop
           # direnv
           mkhl.direnv
-        ]) ++ [
-          # Theme — flake input lets us bake teal accent in at build time.
-          catppuccin-vsc-teal
-        ];
+        ]);
+        # The Catppuccin theme and icons come from catppuccin.vscode
+        # (catppuccin/nix), with the global accent built in.
         userSettings = {
             "window.titleBarStyle" = "native";
-            "claudeCode.claudeProcessWrapper" = "${pkgs.claude-code}/bin/claude";
+        } // lib.optionalAttrs isLinux {
+            "claudeCode.claudeProcessWrapper" = "${llm-agents.claude-code}/bin/claude";
             "window.autoDetectColorScheme" = true;
             "workbench.preferredLightColorTheme" = "Catppuccin Latte";
             "workbench.preferredDarkColorTheme" = "Catppuccin Macchiato";
@@ -78,4 +77,3 @@ in
     registries = ['docker.io']
   '';
 }
-

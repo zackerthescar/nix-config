@@ -3,10 +3,9 @@
 {
   programs.git = {
     enable = true;
-    userName = "Riley Loo";
-    userEmail = "dev@zackerthescar.com";
-
     settings = {
+      user.name = "Riley Loo";
+      user.email = "dev@zackerthescar.com";
       core.editor = "vim";
       credential.helper = "cache";
       init.defaultBranch = "main";

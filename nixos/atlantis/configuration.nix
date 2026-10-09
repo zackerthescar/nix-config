@@ -16,8 +16,6 @@
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.initrd.availableKernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   # MSI X870E firmware has S3 but no LPS0 device, so s2idle cannot reach s0ix.
@@ -41,9 +39,6 @@ zramSwap = {
   };
 
   networking.hostName = "atlantis"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -83,21 +78,13 @@ zramSwap = {
   
   hardware.ua-apollo.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-    alsa.support32Bit = true;
-  };
-  services.pulseaudio.enable = false;
+  # The rest of the PipeWire setup is in common/desktop/services.nix.
+  services.pipewire.alsa.support32Bit = true;
   security.rtkit.enable = true;
   
   # Enable touchpad support (enabled default in most desktopManager).

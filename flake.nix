@@ -1,5 +1,5 @@
 {
-  description = "Your new nix config";
+  description = "zackerthescar's NixOS and nix-darwin configurations";
 
   # Binary caches for the inputs that have their own CI cache. The NixOS hosts
   # also get these from nixos/common/nix-settings.nix. This block is for the
@@ -39,22 +39,13 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    catppuccin-vsc = {
-      url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz";
-    };
-
-    # TODO: Add any other flake you might need
-    hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     ssh-keys = {
       url = "https://github.com/zackerthescar.keys";
       flake = false;
     };
 
-
-    nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
-    };
     catppuccin = {
       url = "github:catppuccin/nix";
     };
@@ -84,7 +75,6 @@ outputs = { nixpkgs,
             darwin, 
             lanzaboote, 
             plasma-manager,
-            nix-cachyos-kernel,
             catppuccin,
             llm-agents,
             open-apollo,
@@ -92,6 +82,9 @@ outputs = { nixpkgs,
             ... 
 }@inputs:
   let
+    # The one user account on every host.
+    username = "zackerthescar";
+
     nixosMachines = {
       pathfinder = {
         extraModules = [ nixos-hardware.nixosModules.lenovo-thinkpad-t520 ];
@@ -113,16 +106,29 @@ outputs = { nixpkgs,
     };
 
     darwinMachines = {
-      columbia = {
-        system = "x86_64-darwin";
-      };
       discovery = {
         system = "aarch64-darwin";
         backupExtension = "backup-2";
-        extraModules = [
-          (import ./overlays/default-darwin.nix)
-        ];
       };
+    };
+
+    # Home-manager settings that NixOS and nix-darwin hosts share.
+    # extraSharedModules adds the platform-specific home modules.
+    # homePath is optional. Add home-manager/<host>/home.nix only for settings
+    # that one host needs.
+    mkHomeManager = cfg: homePath: extraSharedModules: {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = { inherit inputs username; };
+      home-manager.users.${username}.imports = [
+        ./home-manager/common/default.nix
+        ./home-manager/common/desktop/default.nix
+      ] ++ nixpkgs.lib.optional (builtins.pathExists homePath) homePath;
+      home-manager.backupFileExtension = cfg.backupExtension;
+      home-manager.sharedModules = [
+        catppuccin.homeModules.catppuccin
+        zen-browser.homeModules.beta
+      ] ++ extraSharedModules;
     };
 
     mkNixOsSystem = name: config: 
@@ -130,27 +136,20 @@ outputs = { nixpkgs,
         configPath = config.configPath or (./nixos + "/${name}/configuration.nix");
         homePath = config.homePath or (./home-manager + "/${name}/home.nix");
         defaults = {
-          system = "x86_64-linux";
           backupExtension = "backup";
           extraModules = [];
           homeExtraArgs = {};
         };
         cfg = defaults // config;
       in
+      # Each host's hardware-configuration.nix sets nixpkgs.hostPlatform.
       nixpkgs.lib.nixosSystem {
-        system = cfg.system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs username; };
         modules = [
           configPath
-          (import ./overlays/default.nix)
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import homePath;
-            home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager zen-browser.homeModules.beta ];
-          }
+          ./overlays/default.nix
+          home-manager.nixosModules.home-manager
+          (mkHomeManager cfg homePath [ plasma-manager.homeModules.plasma-manager ])
         ] ++ cfg.extraModules;
       };
 
@@ -159,23 +158,19 @@ outputs = { nixpkgs,
         configPath = config.configPath or (./nix-darwin + "/${name}/default.nix");
         homePath = config.homePath or (./home-manager + "/${name}/home.nix");
         defaults = {
+          backupExtension = "backup";
           extraModules = [];
         };
         cfg = defaults // config;
       in
       darwin.lib.darwinSystem {
         system = cfg.system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs username; };
         modules = [
           configPath
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.zackerthescar = import homePath;
-            home-manager.backupFileExtension = cfg.backupExtension;
-            home-manager.sharedModules = [ catppuccin.homeModules.catppuccin zen-browser.homeModules.beta ];
-          }
+          ./overlays/default.nix
+          home-manager.darwinModules.home-manager
+          (mkHomeManager cfg homePath [ ])
         ] ++ cfg.extraModules;
       };
 

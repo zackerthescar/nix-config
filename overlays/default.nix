@@ -1,14 +1,16 @@
 # ./overlays/default.nix
-{ inputs, config, pkgs, lib, ... }:
+# A NixOS and nix-darwin module, so the overlay can read the host config.
+{ config, lib, ... }:
 
 let
   # Only the hosts with an NVIDIA card get the CUDA builds.
-  hasNvidia = lib.elem "nvidia" config.services.xserver.videoDrivers;
+  # nix-darwin has no services.xserver, so this is false there.
+  hasNvidia = lib.elem "nvidia" (config.services.xserver.videoDrivers or [ ]);
 in
 {
   nixpkgs.overlays = [
-    (self: super: {
-        ffmpreg = (super.ffmpeg.override {
+    (final: prev: {
+        ffmpreg = (prev.ffmpeg.override {
             withUnfree = true;
             withDav1d = true;
             withSvtav1 = true;
@@ -21,18 +23,18 @@ in
             withCuda = hasNvidia;
             withZimg = true;
         });
-        prismlauncher-riley = super.prismlauncher.override {
-          jdks = with pkgs; [
+        prismlauncher-riley = prev.prismlauncher.override {
+          jdks = with final; [
             zulu8
             zulu17
             zulu
-	    graalvmPackages.graalvm-ce
+            graalvmPackages.graalvm-ce
           ];
         };
         obs-studio-riley =
           if hasNvidia
-          then super.obs-studio.override { cudaSupport = true; }
-          else super.obs-studio;
+          then prev.obs-studio.override { cudaSupport = true; }
+          else prev.obs-studio;
     })
   ];
 }

@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ...}:
+{ inputs, username, config, pkgs, lib, ...}:
 
 let
    inherit (inputs) ssh-keys;
@@ -7,10 +7,10 @@ in
 {
   programs.zsh.enable = true;
   hardware.i2c.enable = true;
-  users.users.zackerthescar = {
+  users.users.${username} = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "video" "gamemode" "podman" "i2c" ];
-      home = "/home/zackerthescar";
+      home = "/home/${username}";
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = 
 	let 
