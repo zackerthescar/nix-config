@@ -16,19 +16,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.efiSysMountPoint = "/efi";
   boot.loader.systemd-boot.xbootldrMountPoint = "/boot";
-  boot.initrd.availableKernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
-zramSwap = {
+  zramSwap = {
     enable = true;
     algorithm = "zstd";
     memoryPercent = 25;
   };
 
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   networking.hostName = "endurance"; # Define your hostname.
   
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Los_Angeles";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -45,32 +46,25 @@ zramSwap = {
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-    ];
-  };
+  # nixos-hardware's gpu/intel module adds the VA-API driver packages.
+  # Tiger Lake (Gen12) only needs iHD.
+  hardware.graphics.enable = true;
+  hardware.intelgpu.vaapiDriver = "intel-media-driver";
 
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    nvidiaPersistenced = false;
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-  };
-  
 
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
+
+  # The rest of the PipeWire setup is in common/desktop/services.nix.
+  security.rtkit.enable = true;
+
+  # Synaptics 06cb:00bd. Enroll with `fprintd-enroll`.
+  services.fprintd.enable = true;
+  services.fwupd.enable = true;
+  services.thermald.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;

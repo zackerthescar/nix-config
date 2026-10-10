@@ -3,6 +3,12 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
   llm-agents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+  # The extension runs `<wrapper> <bundled claude> <args...>`, so drop the
+  # bundled binary and run the llm-agents claude-code instead.
+  claude-vscode-wrapper = pkgs.writeShellScript "claude-vscode-wrapper" ''
+    case "''${1-}" in */claude) shift ;; esac
+    exec ${llm-agents.claude-code}/bin/claude "$@"
+  '';
 in
 
 {
@@ -20,7 +26,6 @@ in
         libtool # freetype calls glibtoolize
         python3
         distrobox
-        code-server
     ] ++ [
         llm-agents.claude-code
         llm-agents.codex
@@ -36,6 +41,8 @@ in
           ms-vscode.cpptools
           twxs.cmake
           ms-vscode.cmake-tools
+          # Claude Code (CLI comes from llm-agents, see claudeProcessWrapper)
+          anthropic.claude-code
         ] ++ [
           # Python
           ms-python.python
@@ -64,7 +71,7 @@ in
         userSettings = {
             "window.titleBarStyle" = "native";
         } // lib.optionalAttrs isLinux {
-            "claudeCode.claudeProcessWrapper" = "${llm-agents.claude-code}/bin/claude";
+            "claudeCode.claudeProcessWrapper" = "${claude-vscode-wrapper}";
             "window.autoDetectColorScheme" = true;
             "workbench.preferredLightColorTheme" = "Catppuccin Latte";
             "workbench.preferredDarkColorTheme" = "Catppuccin Macchiato";

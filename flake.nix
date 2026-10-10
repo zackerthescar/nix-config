@@ -101,6 +101,10 @@ outputs = { nixpkgs,
         homeExtraArgs = { system = "x86_64-linux"; };
       };
       endurance = {
+        extraModules = [
+          lanzaboote.nixosModules.lanzaboote
+          nixos-hardware.nixosModules.lenovo-thinkpad-x1-nano-gen1
+        ];
         homeExtraArgs = { system = "x86_64-linux"; };
       };
     };
