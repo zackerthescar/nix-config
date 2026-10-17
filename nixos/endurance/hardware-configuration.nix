@@ -16,21 +16,33 @@
   fileSystems."/" =
     { device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "compress=zstd:7" ];
+      options = [ "subvol=@root" "noatime" "compress=zstd" ];
     };
 
-  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/f5db9304-e567-4d5e-89e5-dea118a82659";
+  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/3e495894-52fa-46c7-953e-6318db4221f2";
+
+  fileSystems."/home" =
+    { device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "subvol=@home" "noatime" "compress=zstd" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" "noatime" "compress=zstd:9" ];
+    };
 
   fileSystems."/efi" =
-    { device = "/dev/disk/by-uuid/4BB0-F46E";
+    { device = "/dev/disk/by-uuid/C05D-6AD6";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A912-7F67";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+  fileSystems."/swap" =
+    { device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "subvol=@swap" "nodatacow" "noatime" ];
     };
 
   swapDevices = [ ];

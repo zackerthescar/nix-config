@@ -11,6 +11,7 @@
         ./vscode.nix
         ./discord.nix
         ./virt-manager.nix
+        ./ham.nix
     ];
     home.packages = with pkgs; [
         yt-dlp
@@ -30,6 +31,7 @@
         obs-studio-riley
         ghostty
         alvr
+        librepods
     ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
         # Firefox, Discord and Calibre come from Homebrew casks.
         ghostty-bin

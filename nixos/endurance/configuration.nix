@@ -15,16 +15,38 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.efiSysMountPoint = "/efi";
-  boot.loader.systemd-boot.xbootldrMountPoint = "/boot";
 
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 25;
-  };
-
+  # Use swapfile
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 16 * 1024;
+  }];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.compressor=zstd" # Options: lz4, zstd, etc.
+    "zswap.zpool=z3fold"     # Options: z3fold, zbud, zsmalloc
+    "zswap.max_pool_percent=20" # Max percentage of RAM zswap can use
+    # Hibernate into the btrfs swapfile. Get the offset with:
+    #   sudo btrfs inspect-internal map-swapfile -r /swap/swapfile
+    "resume_offset=5327580"
+  ];
+  boot.kernelModules = [ "zstd" "z3fold" ];
+
+  # Suspend, then hibernate after an hour asleep.
+  boot.resumeDevice = "/dev/mapper/root";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleSuspendKey = "suspend-then-hibernate";
+  };
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
+  # GNOME's idle/menu suspend calls logind's plain Suspend(), bypassing the
+  # handlers above, so make every suspend a suspend-then-hibernate.
+  systemd.services.systemd-suspend.serviceConfig.ExecStart = [
+    ""
+    "${config.systemd.package}/lib/systemd/systemd-sleep suspend-then-hibernate"
+  ];
 
   networking.hostName = "endurance"; # Define your hostname.
   

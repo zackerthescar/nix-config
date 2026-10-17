@@ -9,7 +9,7 @@ in
   hardware.i2c.enable = true;
   users.users.${username} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "video" "gamemode" "podman" "i2c" ];
+      extraGroups = [ "wheel" "networkmanager" "video" "gamemode" "podman" "i2c" "dialout" ];
       home = "/home/${username}";
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = 
