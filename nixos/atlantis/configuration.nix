@@ -76,7 +76,6 @@ zramSwap = {
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
   
-  hardware.ua-apollo.enable = true;
 
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 

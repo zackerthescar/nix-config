@@ -55,10 +55,6 @@
       url = "github:numtide/llm-agents.nix";
     };
 
-    open-apollo = {
-      url = "github:rolotrealanis98/open-apollo";
-    };
-
     zen-browser = {
     url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -77,7 +73,6 @@ outputs = { nixpkgs,
             plasma-manager,
             catppuccin,
             llm-agents,
-            open-apollo,
             zen-browser,
             ... 
 }@inputs:
@@ -96,7 +91,6 @@ outputs = { nixpkgs,
         backupExtension = "backup-2";
         extraModules = [
           lanzaboote.nixosModules.lanzaboote
-          open-apollo.nixosModules.default
         ];
         homeExtraArgs = { system = "x86_64-linux"; };
       };

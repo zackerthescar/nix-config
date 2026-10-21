@@ -41,9 +41,9 @@ in
           ms-vscode.cpptools
           twxs.cmake
           ms-vscode.cmake-tools
+        ] ++ [
           # Claude Code (CLI comes from llm-agents, see claudeProcessWrapper)
           anthropic.claude-code
-        ] ++ [
           # Python
           ms-python.python
           # Java
@@ -70,8 +70,8 @@ in
         # (catppuccin/nix), with the global accent built in.
         userSettings = {
             "window.titleBarStyle" = "native";
-        } // lib.optionalAttrs isLinux {
             "claudeCode.claudeProcessWrapper" = "${claude-vscode-wrapper}";
+        } // lib.optionalAttrs isLinux {
             "window.autoDetectColorScheme" = true;
             "workbench.preferredLightColorTheme" = "Catppuccin Latte";
             "workbench.preferredDarkColorTheme" = "Catppuccin Macchiato";
