@@ -8,4 +8,6 @@ with pkgs;
 		remotePlay.openFirewall = true;
 		protontricks.enable = true;
 	};
+
+	environment.systemPackages = [ umu-launcher ];
 }

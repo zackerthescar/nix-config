@@ -52,7 +52,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         pkgs.gnome-tweaks
         catppuccin-cursors
         gnomeExtensions.user-themes
-	    gnomeExtensions.arcmenu
         gnomeExtensions.dash-to-dock
         gnomeExtensions.blur-my-shell
         gnomeExtensions.brightness-control-using-ddcutil
@@ -72,7 +71,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         	disable-user-extensions = false;
         	enabled-extensions = [
                 "user-theme@gnome-shell-extensions.gcampax.github.com"
-                "arcmenu@arcmenu.com"
                 "blur-my-shell@aunetx"
                 "dash-to-dock@micxgx.gmail.com"
 		    ];
