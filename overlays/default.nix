@@ -25,7 +25,7 @@ in
         });
         prismlauncher-riley = prev.prismlauncher.override {
           jdks = with final; [
-            zulu8
+            (zulu8.override { gtkSupport = false; }) # gtk2 is marked broken
             zulu17
             zulu
             graalvmPackages.graalvm-ce

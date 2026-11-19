@@ -25,7 +25,6 @@
     pkiBundle = "/var/lib/sbctl";
   };
   boot.initrd.systemd = {
-    enable = true;
     storePaths = [
       "${config.boot.initrd.systemd.package}/lib/systemd/systemd-tpm2-setup"
       "${config.boot.initrd.systemd.package}/lib/systemd/system-generators/systemd-tpm2-generator"
@@ -75,9 +74,90 @@ zramSwap = {
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
-  
+
+  # "Balanced" profile for the AORUS RTX 4090 Xtreme Waterforce (AIO).
+  # Undervolt = lock the max core clock + a positive core clock offset. The
+  # offset moves the V/F curve up, so the GPU reaches the clock cap at a lower
+  # voltage. NVML exposes one fan channel (the radiator fans, 30-100 %).
+  # The AIO pump is NOT exposed on Linux and stays under card firmware control.
+  # Tune: raise the offset in +15 MHz steps until a stress test fails, then
+  # go back two steps. Check with `lact cli` / the LACT GUI.
+  #
+  # The config is raw YAML and not `services.lact.settings`: the fan curve map
+  # has integer keys, but pkgs.formats.yaml quotes every attribute name, and
+  # lactd (serde_norway) rejects '50' as an i32 key.
+  services.lact.enable = true;
+  environment.etc."lact/config.yaml".text = ''
+    # Must be the current schema version. A lower value makes lactd run its
+    # migrations, and one of them deletes max_core_clock on NVIDIA GPUs.
+    version: 7
+    daemon:
+      log_level: info
+      admin_group: wheel
+    apply_settings_timer: 5
+    gpus:
+      10DE:2684-1458:40DA-0000:01:00.0:
+        # 80 % of the 450 W default. Costs about 3-5 % performance.
+        power_cap: 360.0
+        # Stock boost goes to ~2750-2800 MHz at ~1.05-1.10 V. Cap at 2610 MHz.
+        min_core_clock: 210
+        max_core_clock: 2610
+        # With +120 MHz, 2610 MHz is reached ~2-3 V/F points (~25-40 mV) lower.
+        gpu_clock_offsets:
+          0: 120
+        fan_control_enabled: true
+        fan_control_settings:
+          mode: curve
+          temperature_key: GPU
+          interval_ms: 1000
+          # Firmware floor is 30 %. lactd rejects values below 0.30.
+          curve:
+            50: 0.30
+            60: 0.38
+            66: 0.50
+            72: 0.65
+            78: 0.85
+            83: 1.00
+          # Hysteresis: fewer speed changes means less fan motor wear.
+          spindown_delay_ms: 8000
+          change_threshold: 2
+  '';
+  systemd.services.lactd.restartTriggers = [
+    config.environment.etc."lact/config.yaml".source
+  ];
+
 
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
+
+  # Keychron V1 Ultra in Mac mode sends Super for Cmd. GNOME keeps Super for
+  # itself, so send the usual Mac Cmd shortcuts as Ctrl instead.
+  # 3434:0c10 is the wired keyboard, 3434:d028 is the Ultra-Link 8K receiver.
+  services.keyd = {
+    enable = true;
+    keyboards.keychron = {
+      ids = [ "3434:0c10" "3434:d028" ];
+      settings = {
+        meta = {
+          a = "C-a";
+          c = "C-c";
+          v = "C-v";
+          x = "C-x";
+          z = "C-z";
+          s = "C-s";
+          f = "C-f";
+          t = "C-t";
+          w = "C-w";
+          n = "C-n";
+          r = "C-r";
+          q = "C-q";
+        };
+        "meta+shift" = {
+          z = "C-S-z";
+          t = "C-S-t";
+        };
+      };
+    };
+  };
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

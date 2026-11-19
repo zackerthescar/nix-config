@@ -51,7 +51,10 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         catppuccin-cursors.latteTeal
         pkgs.gnome-tweaks
         catppuccin-cursors
-        gnomeExtensions.user-themes
+        # User Themes from the GNOME release that matches gnome-shell. The
+        # extensions.gnome.org build (gnomeExtensions.user-themes) can target a
+        # newer shell and then shows as OUT OF DATE.
+        gnome-shell-extensions
         gnomeExtensions.dash-to-dock
         gnomeExtensions.blur-my-shell
         gnomeExtensions.brightness-control-using-ddcutil
